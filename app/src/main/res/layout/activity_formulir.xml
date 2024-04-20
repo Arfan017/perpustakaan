@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="20dp">
 
             <ImageView
                 android:layout_width="70dp"
@@ -38,7 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginVertical="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -51,7 +53,7 @@
 
             <EditText
                 android:id="@+id/ETnoidentitas"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="No Identitas" />
@@ -65,7 +67,7 @@
 
             <EditText
                 android:id="@+id/ETnama"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Nama" />
@@ -79,7 +81,7 @@
 
             <EditText
                 android:id="@+id/ETjeniskelamin"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Jenis Kelamin" />
@@ -93,7 +95,7 @@
 
             <EditText
                 android:id="@+id/ETttgllahir"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Tempat tanggal Lahir" />
@@ -107,7 +109,7 @@
 
             <EditText
                 android:id="@+id/ETalamat1"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Alamat Sesuai Identitas" />
@@ -121,7 +123,7 @@
 
             <EditText
                 android:id="@+id/ETalamat2"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Alamat Tinggal saat ini" />
@@ -135,7 +137,7 @@
 
             <EditText
                 android:id="@+id/ETnotelp"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="No Hp/Telphone" />
@@ -149,7 +151,7 @@
 
             <EditText
                 android:id="@+id/ETperkerjaan"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Pekerjaan" />
@@ -163,7 +165,7 @@
 
             <EditText
                 android:id="@+id/ETinstitusi"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="Alamat Institusi/Sekolah" />
@@ -185,7 +187,7 @@
 </ScrollView>
 
     <!--<LinearLayout-->
-    <!--android:layout_width="350dp"-->
+    <!--android:layout_width="300dp"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:gravity="center"-->
     <!--android:orientation="vertical">-->

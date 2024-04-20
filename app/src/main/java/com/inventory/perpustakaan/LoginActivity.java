@@ -14,11 +14,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.inventory.perpustakaan.Api.konfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,9 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-//
-//        username = sharedpreferences.getString(USERNAME_KEY, null);
-//        password = sharedpreferences.getString(PASSWORD_KEY, null);
+
+        username = sharedpreferences.getString(USERNAME_KEY, null);
+        password = sharedpreferences.getString(PASSWORD_KEY, null);
 
         EtUsername = findViewById(R.id.ETusernamelogin);
         EtPassword = findViewById(R.id.ETpasswordlogin);
@@ -58,9 +61,9 @@ public class LoginActivity extends AppCompatActivity {
         BtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = EtUsername.getText().toString();
+                String username = EtUsername.getText().toString().trim();
                 String password = EtPassword.getText().toString();
-                loginApp(username, password);
+                loginApp(username.trim(), password);
             }
         });
 
@@ -85,7 +88,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginApp(String username, String password) {
         // Buatkan request untuk mengirim data ke server
-        StringRequest request = new StringRequest(Request.Method.POST, "http://192.168.171.41/perpustakaan/php/query/userlogin.php",
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        StringRequest request = new StringRequest(Request.Method.POST, konfig.UrlUserLogin,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -93,17 +97,17 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
                             boolean success = jsonObject.getBoolean("success");
-//                            String[] messageSplit = message.split("[ ]");
+                            String[] messageSplit = message.split("[ ]");
 
                             if (success) {
-//                                String id = messageSplit[3];
-//
-//                                SharedPreferences.Editor editor = sharedpreferences.edit();
-//                                editor.putString(USERNAME_KEY, username);
-//                                editor.putString(PASSWORD_KEY, password);
-//                                editor.putString(ID_KEY, id);
-//
-//                                editor.commit();
+                                String id = messageSplit[3];
+
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(USERNAME_KEY, username);
+                                editor.putString(PASSWORD_KEY, password);
+                                editor.putString(ID_KEY, id);
+
+                                editor.commit();
 
                                 Intent intent = new Intent(LoginActivity.this, FormulirActivity.class);
                                 startActivity(intent);
@@ -120,26 +124,22 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 },
 
-                new Response.ErrorListener() {
+                new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
                     }
                 }) {
 
             @Override
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
-//                Toast.makeText(LoginActivity.this, "sedang mengirim " + username + " Dan " + password, Toast.LENGTH_SHORT).show();
                 Map<String, String> params = new HashMap<>();
                 params.put("username", username.toString());
-                Log.d("params are 1 :", "" + params);
                 params.put("password", password.toString());
-                Log.d("params are 2 :", "" + params);
                 return params;
             }
         };
-        // Menambahkan request ke antrian request Volley
         Volley.newRequestQueue(this).add(request);
     }
 }

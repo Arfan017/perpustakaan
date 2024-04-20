@@ -59,19 +59,19 @@ public class FormulirActivity extends AppCompatActivity {
 
         BtnKirim = findViewById(R.id.BTNkirim);
 
-        noidentitas = EtNoIdentitas.getText().toString();
-        nama = EtNama.getText().toString();
-        jeniskelamin = EtJenisKelamin.getText().toString();
-        ttgllahir = EtTtgLahir.getText().toString();
-        alamat1 = EtAlamat1.getText().toString();
-        alamat2 = EtAlamat2.getText().toString();
-        notelp = EtNoTelp.getText().toString();
-        pekerjaan = EtPekerjaan.getText().toString();
-        institusi = EtInstitusi.getText().toString();
-
         BtnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                noidentitas = EtNoIdentitas.getText().toString();
+                nama = EtNama.getText().toString();
+                jeniskelamin = EtJenisKelamin.getText().toString();
+                ttgllahir = EtTtgLahir.getText().toString();
+                alamat1 = EtAlamat1.getText().toString();
+                alamat2 = EtAlamat2.getText().toString();
+                notelp = EtNoTelp.getText().toString();
+                pekerjaan = EtPekerjaan.getText().toString();
+                institusi = EtInstitusi.getText().toString();
+
                 Daftar(id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
                         alamat2, notelp, pekerjaan, institusi);
             }
@@ -125,11 +125,11 @@ public class FormulirActivity extends AppCompatActivity {
                 params.put("notelp", notelp);
                 params.put("pekerjaan", pekerjaan);
                 params.put("institusi", institusi);
-
                 return params;
             }
         };
         // Menambahkan request ke antrian request Volley
         Volley.newRequestQueue(this).add(request);
+        Toast.makeText(FormulirActivity.this, "Mengirim data ke database", Toast.LENGTH_SHORT).show();
     }
 }

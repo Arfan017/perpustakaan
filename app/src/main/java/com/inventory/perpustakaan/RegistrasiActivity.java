@@ -55,6 +55,7 @@ public class RegistrasiActivity extends AppCompatActivity {
                 nama = EtNama.getText().toString();
                 email = EtEmail.getText().toString();
                 password = EtPassword.getText().toString();
+                username = EtUsername.getText().toString();
                 konfirpassword = EtKonfirPassword.getText().toString();
                 if (password.equals(konfirpassword)){
                     Register(nama, email, username, konfirpassword);
