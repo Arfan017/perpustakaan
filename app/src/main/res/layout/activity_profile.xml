@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp"
+    android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
     <LinearLayout
+        android:id="@+id/LVHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/arrow" />
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Profile"
-            android:textSize="18dp" />
+            android:layout_height="match_parent"
+            android:text="Profil"
+            android:textSize="24dp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/LVHeader"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
-        android:gravity="center">
+        android:gravity="center_vertical">
 
         <ImageView
             android:layout_width="80dp"
@@ -49,6 +44,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/TVNama"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nama"
@@ -56,21 +52,27 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/TVNomember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ketuk untuk mengubaah"
+                android:text="NoMember"
                 android:textSize="16dp"
                 android:textStyle="italic" />
 
         </LinearLayout>
-
     </LinearLayout>
 
+    <!--    Data Profile-->
     <LinearLayout
+        android:id="@+id/data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/Profile"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:background="@drawable/bg_outline"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,27 +97,10 @@
                     android:textSize="15dp" />
 
                 <EditText
-                    android:layout_width="match_parent"
+                    android:id="@+id/ETNama"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Nama"
-                    android:textSize="15dp" />
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_gravity="start"
-                    android:gravity="center"
-                    android:text="Jenis Kelamin"
-                    android:textSize="15dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Jenis Kelamin"
                     android:textSize="15dp" />
 
             </TableRow>
@@ -131,27 +116,10 @@
                     android:textSize="15dp" />
 
                 <EditText
+                    android:id="@+id/ETNohp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="No. Hp"
-                    android:textSize="15dp" />
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_gravity="start"
-                    android:gravity="center"
-                    android:text="Pekerjaan"
-                    android:textSize="15dp" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Pekerjaan"
                     android:textSize="15dp" />
 
             </TableRow>
@@ -167,9 +135,48 @@
                     android:textSize="15dp" />
 
                 <EditText
+                    android:id="@+id/ETEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
+                    android:textSize="15dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Alamat"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETAlamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alamat"
+                    android:textSize="15dp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="TTL"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETTtl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tempat Tanggal Lahir"
                     android:textSize="15dp" />
 
             </TableRow>
@@ -178,10 +185,17 @@
 
     </LinearLayout>
 
+    <!--    Peminjaman-->
     <LinearLayout
+        android:id="@+id/pinjam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@+id/data"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_outline"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -201,7 +215,7 @@
                 android:background="@drawable/bg_buton_outline">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
 
@@ -219,7 +233,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/LLDaftarPinjam"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="right">
@@ -244,7 +259,7 @@
             <TableRow android:background="@drawable/bg_buton_outline">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp">
 
@@ -262,7 +277,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/LLRiwayatPinjam"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="right">
@@ -281,11 +297,381 @@
                         android:gravity="center"
                         android:src="@drawable/forward" />
                 </LinearLayout>
-
             </TableRow>
 
         </TableLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="90dp">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_add"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Floating action button for add alarm -->
+        <!-- Make sure that you are constraining this
+             button to the parent button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/logout_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_logout"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/add_fab"
+            app:layout_constraintEnd_toEndOf="@+id/add_fab"
+            app:layout_constraintStart_toStartOf="@+id/add_fab" />
+
+        <!-- Action name text for the add alarm button -->
+        <!-- Make sure that you are constraining this Text to
+             the add Alarm FAB button -->
+        <TextView
+            android:id="@+id/TVLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Logout"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/logout_fab"
+            app:layout_constraintEnd_toStartOf="@+id/logout_fab"
+            app:layout_constraintTop_toTopOf="@+id/logout_fab" />
+
+        <!-- Floating action button for add person -->
+        <!-- Make sure that you are constraining this
+             button to the add Alarm FAB button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_edit"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/logout_fab"
+            app:layout_constraintEnd_toEndOf="@+id/logout_fab"
+            app:layout_constraintStart_toStartOf="@+id/logout_fab" />
+
+        <!-- Action name text for the add person button -->
+        <!-- Make sure that you are constraining this Text
+             to the add Person FAB button -->
+        <TextView
+            android:id="@+id/TVEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Edit"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_fab"
+            app:layout_constraintEnd_toStartOf="@+id/edit_fab"
+            app:layout_constraintTop_toTopOf="@+id/edit_fab" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/bottom_background"
+        android:elevation="2dp"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@drawable/item_selector"
+        app:itemRippleColor="@android:color/transparent"
+        app:menu="@menu/bottom_menu" />
+
+    <ScrollView
+        android:id="@+id/SVEdit"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_outline"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+                <!--No Identitas-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="No Identitas"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditNoIdentitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="No Identitas"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--nama-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Nama Lengkap  "
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditNama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Nama"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--jenkel-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Jenis kelamin"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditJenkel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Jenis kelamin"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Ttgl lahir-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="TTL"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditTtl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tempat Tanggal Lahir"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Email-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Email"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Alamat Sesuai Kartu Identitas-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Alamat "
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditAlamatIdentitas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alamat tinggal sesuai identitas"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Alamat tinggal saat ini-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Alamat"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditAlamatSekarang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alamat tinggal saat ini"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--NoHp-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="No. Hp"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditNohp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="No. Hp"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Pekerjaan-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Pekerjaan"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditPekerjaan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pekerjaan"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Nama Institusi/Sekolah-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Nama Institusi"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditNamaInstitusi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nama Institusi/Sekolah"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Alamat Institusi/Sekolah-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Alamat Institusi"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/EditAlamatInstitusi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alamat Institusi/Sekolah"
+                        android:textSize="15dp" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/BTNBatal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_buton"
+                        android:letterSpacing="0.2"
+                        android:text="Batal"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/BTNSimpan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/bg_buton"
+                        android:letterSpacing="0.2"
+                        android:text="Simpan"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

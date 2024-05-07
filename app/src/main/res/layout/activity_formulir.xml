@@ -6,180 +6,234 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RegistrasiActivity">
+    tools:context=".FormulirActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginTop="20dp">-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="70dp"-->
+        <!--                android:layout_height="70dp"-->
+        <!--                android:src="@drawable/logo" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginHorizontal="10dp"-->
+        <!--                android:text="From Kartu Anggota"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:textStyle="bold" />-->
+
+        <!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="20dp">
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:text="From Kartu Anggota"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="20dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="50dp"
             android:gravity="center"
             android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/logo"
+                app:civ_border_color="#b7e0ff"
+                app:civ_border_width="2dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="No Identitas (KTP/KTM/Pelajar/SIM)"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETnoidentitas"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="No Identitas" />
+                android:background="@drawable/bg_outline"
+                android:hint="No Identitas"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Nama Lengkap"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETnama"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Nama" />
+                android:background="@drawable/bg_outline"
+                android:hint="Nama"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Jenis Kelamin"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETjeniskelamin"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Jenis Kelamin" />
+                android:background="@drawable/bg_outline"
+                android:hint="Jenis Kelamin"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Tempat tanggal Lahir"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETttgllahir"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Tempat tanggal Lahir" />
+                android:background="@drawable/bg_outline"
+                android:hint="Tempat tanggal Lahir"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Alamat Sesuai Identitas"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETalamat1"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Alamat Sesuai Identitas" />
+                android:background="@drawable/bg_outline"
+                android:hint="Alamat Sesuai Identitas"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Alamat Tinggal saat ini"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETalamat2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Alamat Tinggal saat ini" />
+                android:background="@drawable/bg_outline"
+                android:hint="Alamat Tinggal saat ini"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="No Hp/Telphone"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETnotelp"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="No Hp/Telphone" />
+                android:background="@drawable/bg_outline"
+                android:hint="No Hp/Telphone"
+                android:textSize="14dp"
+                android:paddingLeft="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Pekerjaan"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/ETperkerjaan"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Pekerjaan" />
+                android:background="@drawable/bg_outline"
+                android:hint="Pekerjaan"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Nama Institusi/Sekolah"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/ETnamainstitusi"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_outline"
+                android:hint="Nama Institusi/Sekolah"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="Alamat Institusi/Sekolah"
-                android:textSize="18dp" />
+                android:textSize="14dp" />
 
             <EditText
-                android:id="@+id/ETinstitusi"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/ETalamatinstitusi"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:layout_marginBottom="20dp"
-                android:hint="Alamat Institusi/Sekolah" />
+                android:background="@drawable/bg_outline"
+                android:hint="Alamat Institusi/Sekolah"
+                android:paddingLeft="10dp"
+                android:textSize="14dp" />
 
             <Button
                 android:id="@+id/BTNkirim"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:background="@drawable/bg_buton"
                 android:letterSpacing="0.2"
-                android:text="Kirim"
+                android:text="Daftar"
                 android:textColor="@color/white"
+                android:textSize="14dp"
+                android:layout_marginBottom="40dp"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
     </LinearLayout>

@@ -1,96 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".UlasanActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/arrow" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/arrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Ulasan Buku"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/BTNPinjam"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/bg_buton_outline"
+                android:text="Pinjam"
+                android:textColor="@color/blue" />
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_buton"
+                android:text="Ulasan"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/line" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RVUlasan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FABUlasan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_ulasan"
+        app:fabSize="normal" />
+
+    <LinearLayout
+        android:id="@+id/LLUlasan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/bg_outline"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Ulasan Buku"
-            android:textSize="18dp" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:gravity="center">
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/bg_buton_outline"
-            android:text="Pinjam"
-            android:textColor="@color/blue" />
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_buton"
+            android:layout_marginBottom="20dp"
             android:text="Ulasan"
-            android:textColor="@color/white" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@drawable/line" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="520dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/RBRating"
+            android:layout_width="240dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:stepSize="1" />
 
         <EditText
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:hint="Masukkan Ulasan" />
+            android:id="@+id/ETUlasan"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/bg_outline"
+            android:hint="Berikan Ulasan Anda"
+            android:maxLength="100"
+            android:paddingLeft="10dp" />
 
-        <Button
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_buton"
-            android:text="Kirim"
-            android:textColor="@color/white" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:stretchColumns="*">
 
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/BTNBatal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_buton"
+                    android:letterSpacing="0.2"
+                    android:text="Batal"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/BTNSimpan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/bg_buton"
+                    android:letterSpacing="0.2"
+                    android:text="Simpan"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </TableRow>
+
+        </TableLayout>
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

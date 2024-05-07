@@ -6,9 +6,9 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
-    app:cardMaxElevation="10dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +17,7 @@
         android:padding="5dp">
 
         <ImageView
+            android:id="@+id/IVBUku"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/logo" />
@@ -28,6 +29,7 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/TVBUku"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nama"
@@ -35,6 +37,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/TVTglPinjam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tgl Pinjam: --/--/----"
@@ -42,6 +45,7 @@
                 android:textStyle="italic" />
 
             <TextView
+                android:id="@+id/TVTglKembali"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tgl Kembali: --/--/----"
@@ -49,6 +53,7 @@
                 android:textStyle="italic" />
 
             <TextView
+                android:id="@+id/TVDenda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Denda: - "

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DaftarRiwayatPeminjamanActivity">
+    tools:context=".DashboardActivity">
 
     <LinearLayout
         android:id="@+id/LVHeader"
@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Daftar Pinjaman"
+            android:text="Daftar Buku"
             android:textSize="24dp" />
 
     </LinearLayout>
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/LVHeader"
-        android:layout_marginBottom="80dp" />
+        android:layout_marginBottom="80dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
@@ -41,6 +41,6 @@
         app:itemIconSize="30dp"
         app:itemIconTint="@drawable/item_selector"
         app:itemRippleColor="@android:color/transparent"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"/>
 
 </RelativeLayout>

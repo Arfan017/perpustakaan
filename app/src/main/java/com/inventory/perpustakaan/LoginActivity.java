@@ -38,7 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String USERNAME_KEY = "username_key";
     public static final String PASSWORD_KEY = "password_key";
-    public static final String ID_KEY = "id_key";
+    public static final String ID_USER = "id_user";
+    public static final String STATUS_MEMBER = "status_member";
     SharedPreferences sharedpreferences;
 
     @Override
@@ -101,15 +102,17 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (success) {
                                 String id = messageSplit[3];
+                                String status_member = messageSplit[4];
 
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
                                 editor.putString(USERNAME_KEY, username);
                                 editor.putString(PASSWORD_KEY, password);
-                                editor.putString(ID_KEY, id);
+                                editor.putString(ID_USER, id);
+                                editor.putString(STATUS_MEMBER, status_member);
 
                                 editor.commit();
 
-                                Intent intent = new Intent(LoginActivity.this, FormulirActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                                 startActivity(intent);
                                 finish();
 
@@ -141,5 +144,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         Volley.newRequestQueue(this).add(request);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (username != null && password != null) {
+            Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
+            finish();
+            startActivity(i);
+        }
     }
 }

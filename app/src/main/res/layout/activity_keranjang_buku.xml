@@ -30,80 +30,199 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="30dp"
-        android:gravity="center"
+        android:layout_margin="20dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:src="@drawable/logo"
-            android:layout_marginBottom="10dp"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <ImageView
+                    android:id="@+id/IVImage"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/logo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="30dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Nama Buku"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/ETNamaBuku"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_outline"
+                        android:hint="Nama Buku"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Status"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/ETStatusBuku"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_outline"
+                        android:hint="Status"
+                        android:textColor="@color/black"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+        </TableLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="Nama Buku"
-            android:textSize="18dp" />
+            android:text="Penulis"
+            android:textSize="14dp" />
 
         <EditText
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Nama Buku" />
+            android:id="@+id/ETPenulis"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_outline"
+            android:hint="Penulis"
+            android:paddingLeft="10dp"
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="Status"
-            android:textSize="18dp" />
+            android:text="Penerbit"
+            android:textSize="14dp" />
 
         <EditText
-            android:layout_width="350dp"
+            android:id="@+id/ETPenerbit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:background="@drawable/bg_outline"
+            android:hint="Penerbit"
+            android:paddingLeft="10dp"
+            android:textSize="12dp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Status" />
+            android:stretchColumns="0, 1">
+
+            <TableRow>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Tgl Ambil"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/ETTglAmbil"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_outline"
+                        android:textColor="@color/black"
+                        android:hint="Tgl Ambil"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:text="Tgl Kembali"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/ETTglkembali"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/black"
+                        android:background="@drawable/bg_outline"
+                        android:hint="Tgl Kembali"
+                        android:paddingLeft="10dp"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="Tanggal Pengambilan"
-            android:textSize="18dp" />
+            android:text="* Pengambilan duku data dilakukan pada tanggal yang tertera diatas"
+            android:textColor="@color/design_default_color_error"
+            android:textSize="14dp" />
 
-        <EditText
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Tanggal Pengambilan" />
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="Tanggal Pengembalian"
-            android:textSize="18dp" />
-
-        <EditText
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:hint="Tanggal Pengembalian" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
 
         <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:id="@+id/BTNPinjam"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:background="@drawable/bg_buton"
             android:letterSpacing="0.2"
             android:text="Pinjam"
             android:textColor="@color/white"
+            android:textSize="14dp"
             android:textStyle="bold" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

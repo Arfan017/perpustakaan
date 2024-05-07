@@ -1,6 +1,8 @@
 package com.inventory.perpustakaan;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,12 +33,13 @@ import java.util.Map;
 
 public class FormulirActivity extends AppCompatActivity {
     EditText EtNoIdentitas, EtNama, EtJenisKelamin, EtTtgLahir, EtAlamat1,
-            EtAlamat2, EtNoTelp, EtPekerjaan, EtInstitusi;
+            EtAlamat2, EtNoTelp, EtPekerjaan, EtNamaInstitusi, EtAlamatInstitusi;
     Button BtnKirim;
     String id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-            alamat2, notelp, pekerjaan, institusi;
+            alamat2, notelp, pekerjaan, namatinstitusi,alamatinstitusi;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String ID_KEY = "id_key";
+    public static final String ID_USER = "id_user";
     SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class FormulirActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulir);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        id = sharedpreferences.getString(ID_KEY, null);
+        id = sharedpreferences.getString(ID_USER, null);
 
         EtNoIdentitas = findViewById(R.id.ETnoidentitas);
         EtNama = findViewById(R.id.ETnama);
@@ -55,13 +58,15 @@ public class FormulirActivity extends AppCompatActivity {
         EtAlamat2 = findViewById(R.id.ETalamat2);
         EtNoTelp = findViewById(R.id.ETnotelp);
         EtPekerjaan = findViewById(R.id.ETperkerjaan);
-        EtInstitusi = findViewById(R.id.ETinstitusi);
+        EtNamaInstitusi = findViewById(R.id.ETnamainstitusi);
+        EtAlamatInstitusi = findViewById(R.id.ETalamatinstitusi);
 
         BtnKirim = findViewById(R.id.BTNkirim);
 
         BtnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                String _id = id;
                 noidentitas = EtNoIdentitas.getText().toString();
                 nama = EtNama.getText().toString();
                 jeniskelamin = EtJenisKelamin.getText().toString();
@@ -70,16 +75,17 @@ public class FormulirActivity extends AppCompatActivity {
                 alamat2 = EtAlamat2.getText().toString();
                 notelp = EtNoTelp.getText().toString();
                 pekerjaan = EtPekerjaan.getText().toString();
-                institusi = EtInstitusi.getText().toString();
+                namatinstitusi = EtNamaInstitusi.getText().toString();
+                alamatinstitusi = EtAlamatInstitusi.getText().toString();
 
                 Daftar(id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-                        alamat2, notelp, pekerjaan, institusi);
+                        alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
             }
         });
     }
 
     private void Daftar(String id, String noidentitas, String nama, String jeniskelamin, String ttgllahir, String alamat1,
-                        String alamat2, String notelp, String pekerjaan, String institusi) {
+                        String alamat2, String notelp, String pekerjaan, String namatinstitusi, String alamatinstitusi) {
         StringRequest request = new StringRequest(Request.Method.POST, konfig.UrlUserDaftar,
                 new Response.Listener<String>() {
                     @Override
@@ -90,10 +96,7 @@ public class FormulirActivity extends AppCompatActivity {
                             String message = jsonObject.getString("message");
 
                             if (success) {
-//                                Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(FormulirActivity.this, LoginActivity.class);
-//                                startActivity(intent);
-//                                finish();
+                                PesanAlert();
                                 Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
                             } else {
                                 // Login gagal
@@ -124,12 +127,45 @@ public class FormulirActivity extends AppCompatActivity {
                 params.put("alamat2", alamat2);
                 params.put("notelp", notelp);
                 params.put("pekerjaan", pekerjaan);
-                params.put("institusi", institusi);
+                params.put("namatinstitusi", namatinstitusi);
+                params.put("alamatinstitusi", alamatinstitusi);
                 return params;
             }
         };
         // Menambahkan request ke antrian request Volley
         Volley.newRequestQueue(this).add(request);
         Toast.makeText(FormulirActivity.this, "Mengirim data ke database", Toast.LENGTH_SHORT).show();
+    }
+
+    private void PesanAlert(){
+        // Create the object of AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(FormulirActivity.this);
+
+        // Set Alert Title
+        builder.setTitle("Pemberitahuan");
+
+        // Set the message show for the Alert time
+        builder.setMessage("Anda telah mendaftar sebagai member \n" +
+                "Tunggu verifikasi admin untuk melanjuti peminjaman buku.");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+//        builder.setPositiveButton("Daftar Member", (DialogInterface.OnClickListener) (dialog, which) -> {
+//            // When the user click yes button then app will close
+//            finish();
+//        });
+
+        // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setNegativeButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // If user click no then dialog box is canceled.
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
     }
 }
