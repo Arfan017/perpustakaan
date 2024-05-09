@@ -81,8 +81,10 @@ public class DetailBukuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 status_member = sharedpreferences.getString(STATUS_MEMBER, null);
 
-                if (Integer.valueOf(status_member) == 0) {
+                if (Integer.parseInt(status_member) == 0) {
                     PesanAlert();
+                } else if (Integer.parseInt(status_member) == 2) {
+                    PesanAlert1();
                 } else {
                     Intent intent = new Intent(DetailBukuActivity.this, KeranjangBukuActivity.class);
                     intent.putExtra("id_buku", id_buku);
@@ -130,6 +132,31 @@ public class DetailBukuActivity extends AppCompatActivity {
         // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setNegativeButton("Nanti", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
+    }
+
+    private void PesanAlert1() {
+        // Create the object of AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailBukuActivity.this);
+
+        // Set Alert Title
+        builder.setTitle("Peringatan !");
+
+        // Set the message show for the Alert time
+        builder.setMessage("Anda sudah mendaftar sebagi member, silahkan tunggu konfirmasi admin");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // When the user click yes button then app will close
             dialog.cancel();
         });
 

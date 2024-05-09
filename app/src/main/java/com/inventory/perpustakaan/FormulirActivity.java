@@ -1,11 +1,16 @@
 package com.inventory.perpustakaan;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -24,23 +30,35 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.inventory.perpustakaan.Api.konfig;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FormulirActivity extends AppCompatActivity {
     EditText EtNoIdentitas, EtNama, EtJenisKelamin, EtTtgLahir, EtAlamat1,
             EtAlamat2, EtNoTelp, EtPekerjaan, EtNamaInstitusi, EtAlamatInstitusi;
     Button BtnKirim;
     String id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-            alamat2, notelp, pekerjaan, namatinstitusi,alamatinstitusi;
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String ID_KEY = "id_key";
-    public static final String ID_USER = "id_user";
+            alamat2, notelp, pekerjaan, namatinstitusi,alamatinstitusi, encodedImageString;
     SharedPreferences sharedpreferences;
+    CircleImageView circleImageprofile;
+    Bitmap bitmap;
+    public static final String SHARED_PREFS = "shared_prefs";
+    public static final String STATUS_MEMBER = "status_member";
+    public static final String ID_USER = "id_user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +78,7 @@ public class FormulirActivity extends AppCompatActivity {
         EtPekerjaan = findViewById(R.id.ETperkerjaan);
         EtNamaInstitusi = findViewById(R.id.ETnamainstitusi);
         EtAlamatInstitusi = findViewById(R.id.ETalamatinstitusi);
+        circleImageprofile = findViewById(R.id.profile_image);
 
         BtnKirim = findViewById(R.id.BTNkirim);
 
@@ -82,6 +101,54 @@ public class FormulirActivity extends AppCompatActivity {
                         alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
             }
         });
+
+        circleImageprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dexter.withActivity(FormulirActivity.this)
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                                Intent intent =  new Intent(Intent.ACTION_PICK);
+                                intent.setType("image/*");
+                                startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+                            }
+
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                            }
+
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                                permissionToken.continuePermissionRequest();
+                            }
+                        }).check();
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        if (requestCode == 1 && resultCode == RESULT_OK){
+            Uri filepath = data.getData();
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(filepath);
+                bitmap = BitmapFactory.decodeStream(inputStream);
+                circleImageprofile.setImageBitmap(bitmap);
+                encodebitmap(bitmap);
+            } catch (Exception ex) {
+//                throw new RuntimeException(ex);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    };
+
+    private void encodebitmap(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteofimage = byteArrayOutputStream.toByteArray();
+        encodedImageString = android.util.Base64.encodeToString(byteofimage, Base64.DEFAULT);
     }
 
     private void Daftar(String id, String noidentitas, String nama, String jeniskelamin, String ttgllahir, String alamat1,
@@ -129,6 +196,7 @@ public class FormulirActivity extends AppCompatActivity {
                 params.put("pekerjaan", pekerjaan);
                 params.put("namatinstitusi", namatinstitusi);
                 params.put("alamatinstitusi", alamatinstitusi);
+                params.put("gambar", encodedImageString);
                 return params;
             }
         };
@@ -143,6 +211,10 @@ public class FormulirActivity extends AppCompatActivity {
 
         // Set Alert Title
         builder.setTitle("Pemberitahuan");
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(STATUS_MEMBER, "2");
+        editor.commit();
 
         // Set the message show for the Alert time
         builder.setMessage("Anda telah mendaftar sebagai member \n" +
@@ -161,6 +233,9 @@ public class FormulirActivity extends AppCompatActivity {
         builder.setNegativeButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
             dialog.cancel();
+            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
         });
 
         // Create the Alert dialog

@@ -1,6 +1,6 @@
 package com.inventory.perpustakaan.Adapter;
 
-import static com.inventory.perpustakaan.Api.konfig.UrlImage;
+import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class AdapterBuku extends RecyclerView.Adapter<AdapterBuku.RecyclerViewHo
         // Set the data to textview and imageview.
         ModelBuku DataBuku = ListBuku.get(position);
         holder.courseTV.setText(DataBuku.getNama_buku());
-        Glide.with(mcontext).load(UrlImage+DataBuku.getGambar_buku()).into(holder.courseIV);
+        Glide.with(mcontext).load(UrlImageBuku+DataBuku.getGambar_buku()).into(holder.courseIV);
     }
 
     @Override

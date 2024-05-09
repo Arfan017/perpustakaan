@@ -1,5 +1,7 @@
 package com.inventory.perpustakaan;
 
+import static com.inventory.perpustakaan.Api.konfig.UrlImageProfile;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.inventory.perpustakaan.Api.konfig;
@@ -42,12 +46,16 @@ public class ProfileActivity extends AppCompatActivity {
     EditText ETnama, ETjenkel, ETnohp, ETpekerjaan, ETemail, ETttllahir, ETalamat,
             EditNoIdentitas, EditNama, EditJenkel, EditTtl, EditEmail, EditAlamatIdentitas,
             EditAlamatSekarang, EditNohp, EditPekerjaan, EditNamaInstitusi, EditAlamatInstitusi;
+    ImageView IVprofile;
     ScrollView SVedit;
     Button BtnSimpan, BtnBatal;
     SharedPreferences sharedpreferences;
     String id_user;
     public static final String SHARED_PREFS = "shared_prefs";
+    public static final String USERNAME_KEY = "username_key";
+    public static final String PASSWORD_KEY = "password_key";
     public static final String ID_USER = "id_user";
+    public static final String STATUS_MEMBER = "status_member";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         id_user = sharedpreferences.getString(ID_USER, null);
+
+        IVprofile = findViewById(R.id.IVProfile);
 
         // inisialisasi EditText
         ETnama = findViewById(R.id.ETNama);
@@ -171,6 +181,7 @@ public class ProfileActivity extends AppCompatActivity {
                 isAllFabsVisible = false;
             }
         });
+
         FABEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,11 +190,21 @@ public class ProfileActivity extends AppCompatActivity {
                 ).show();
             }
         });
+
         FABLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ProfileActivity.this, "Person Added", Toast.LENGTH_SHORT
-                ).show();
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.remove(USERNAME_KEY);
+                editor.remove(PASSWORD_KEY);
+                editor.remove(ID_USER);
+                editor.remove(STATUS_MEMBER);
+
+                editor.apply();
+
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class );
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -232,7 +253,9 @@ public class ProfileActivity extends AppCompatActivity {
                                 String email = jsonObject.getString("email");
                                 String ttgl_lahir = jsonObject.getString("ttgl_lahir");
                                 String alamat = jsonObject.getString("alamat");
+                                String gambar = jsonObject.getString("gambar");
 
+                                Glide.with(ProfileActivity.this).load(UrlImageProfile + gambar).into(IVprofile);
                                 TVnama.setText(nama);
                                 TVnomember.setText(no_member);
                                 ETnama.setText(nama);

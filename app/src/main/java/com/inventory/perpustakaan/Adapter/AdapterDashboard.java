@@ -1,7 +1,6 @@
 package com.inventory.perpustakaan.Adapter;
 
 import static androidx.core.content.ContextCompat.startActivity;
-import static com.inventory.perpustakaan.Api.konfig.UrlImage;
 
 import android.content.Context;
 import android.content.Intent;

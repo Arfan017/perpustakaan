@@ -61,7 +61,6 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
             if (id == R.id.home) {
                 startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
                 finish();
                 return true;
             } else if (id == R.id.buku) {

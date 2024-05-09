@@ -1,6 +1,6 @@
 package com.inventory.perpustakaan.Adapter;
 
-import static com.inventory.perpustakaan.Api.konfig.UrlImage;
+import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class AdapterUlasan extends RecyclerView.Adapter<AdapterUlasan.RecyclerVi
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         // Set the data to textview and imageview.
         ModelUlasan DataUlasan = ListUlasan.get(position);
-        Glide.with(mcontext).load(UrlImage+DataUlasan.getGambarbuku()).into(holder.IVbuku);
+        Glide.with(mcontext).load(UrlImageBuku+DataUlasan.getGambarbuku()).into(holder.IVbuku);
 
         holder.TVnama.setText(DataUlasan.getNama());
         holder.TVulasan.setText(DataUlasan.getUlasan());

@@ -1,6 +1,6 @@
 package com.inventory.perpustakaan.Adapter;
 
-import static com.inventory.perpustakaan.Api.konfig.UrlImage;
+import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -48,7 +48,7 @@ public class AdapterPinjamBuku extends RecyclerView.Adapter<AdapterPinjamBuku.Re
             holder.TVtglpinjam.setText("Tgl Pinjam: " + LocalDate.parse(DataPinjamBuku.getTgl_pinjam()).format(formatters).toString());
             holder.TVtglkembali.setText("Tgl Pinjam: " + LocalDate.parse(DataPinjamBuku.getTgl_kembali()).format(formatters).toString());
         }
-        Glide.with(mcontext).load(UrlImage + DataPinjamBuku.getGambar_buku()).into(holder.IVbuku);
+        Glide.with(mcontext).load(UrlImageBuku + DataPinjamBuku.getGambar_buku()).into(holder.IVbuku);
         holder.TVbuku.setText(DataPinjamBuku.getNama_buku());
         holder.TVdenda.setText(DataPinjamBuku.getDenda());
     }

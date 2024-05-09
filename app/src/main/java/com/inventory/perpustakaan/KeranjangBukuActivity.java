@@ -1,6 +1,6 @@
 package com.inventory.perpustakaan;
 
-import static com.inventory.perpustakaan.Api.konfig.UrlImage;
+import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
 
 import android.content.Context;
 import android.content.Intent;
@@ -78,7 +78,7 @@ public class KeranjangBukuActivity extends AppCompatActivity {
         BTNPinjam = findViewById(R.id.BTNPinjam);
 
         Glide.with(this)
-                .load(UrlImage+gambar_buku)
+                .load(UrlImageBuku+gambar_buku)
                 .into(IVImage);
 
         if (status.isEmpty()){
