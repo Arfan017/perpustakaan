@@ -21,6 +21,7 @@
             android:textSize="24dp" />
 
         <HorizontalScrollView
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -29,81 +30,118 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/BTNkategori0"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="SEMUA KATEGORI"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="FILSAFAT DAN PSIKOLOGI"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori2"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="AGAMA"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori3"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="ILMU SOSIAL"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori4"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="BAHASA"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori5"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="SAINS DAN METEMATIKA"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori6"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="TEKNOLOGI"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori7"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="KESENIAN DAN REKREASI"
                     android:textSize="12dp" />
 
                 <Button
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/BTNkategori8"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
-                    android:text="Kategori1"
+                    android:paddingHorizontal="10dp"
+                    android:text="SASTRA"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/BTNkategori9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_outline"
+                    android:paddingHorizontal="10dp"
+                    android:text="SEJARAH DAN GEOGRAFI"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/BTNkategori10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_outline"
+                    android:paddingHorizontal="10dp"
+                    android:text="KOMPUTER INFORMASI REFERENSI UMUM"
                     android:textSize="12dp" />
 
             </LinearLayout>
 
         </HorizontalScrollView>
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -111,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/LVKategori"
-        android:layout_marginBottom="80dp"/>
+        android:layout_marginBottom="80dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

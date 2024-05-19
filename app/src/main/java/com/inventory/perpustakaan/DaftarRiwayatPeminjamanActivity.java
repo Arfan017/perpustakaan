@@ -1,5 +1,6 @@
 package com.inventory.perpustakaan;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -81,6 +82,9 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
     }
 
     private void GetDataRiwayatPinjamBuku(String id_user) {
+        ProgressDialog asyncDialog = new ProgressDialog(this);
+        asyncDialog.setMessage("Mengambil Data Buku...");
+        asyncDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, konfig.UrlGetDataPinjamBuku,
                 new Response.Listener<String>() {
                     @Override
@@ -105,9 +109,11 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
                                         buku.getString("denda")
                                 ));
                             }
+
                             //creating adapter object and setting it to recyclerview
                             AdapterPinjamBuku adapter = new AdapterPinjamBuku(modelPinjamBukuArrayList, DaftarRiwayatPeminjamanActivity.this);
                             recyclerView.setAdapter(adapter);
+                            asyncDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -124,6 +130,7 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
                 params.put("id_member", id_user);
+                params.put("status", "kembali");
                 return params;
             }
         };

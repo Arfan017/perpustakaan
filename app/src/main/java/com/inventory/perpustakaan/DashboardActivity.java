@@ -1,7 +1,9 @@
 package com.inventory.perpustakaan;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DashboardActivity extends AppCompatActivity implements IClickListener {
+public class DashboardActivity extends AppCompatActivity implements IClickListener{
     private RecyclerView recyclerView;
     private ArrayList<ModelBuku> modelBukuArrayList;
 
@@ -71,7 +73,10 @@ public class DashboardActivity extends AppCompatActivity implements IClickListen
     }
 
     private void GetDataBuku() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, konfig.UrlGetDataBuku,
+        ProgressDialog asyncDialog = new ProgressDialog(this);
+        asyncDialog.setMessage("Mengambil Data Buku...");
+        asyncDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, konfig.UrlGetDataBukuByRating,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -104,6 +109,7 @@ public class DashboardActivity extends AppCompatActivity implements IClickListen
                             //creating adapter object and setting it to recyclerview
                             AdapterDashboard adapter = new AdapterDashboard(modelBukuArrayList, DashboardActivity.this, DashboardActivity.this);
                             recyclerView.setAdapter(adapter);
+                            asyncDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -129,8 +135,6 @@ public class DashboardActivity extends AppCompatActivity implements IClickListen
 
     @Override
     public void OnItemClick(int position) {
-        Intent intent = new Intent(DashboardActivity.this, DetailBukuActivity.class);
-        intent.putExtra("id_buku", modelBukuArrayList.get(position).getId_buku()).toString();
-        startActivity(intent);
+
     }
 }

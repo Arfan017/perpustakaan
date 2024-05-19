@@ -1,6 +1,8 @@
 package com.inventory.perpustakaan;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -129,6 +131,9 @@ public class UlasanActivity extends AppCompatActivity {
     }
 
     private void GetDataUlasan(String id_buku) {
+        ProgressDialog asyncDialog = new ProgressDialog(this);
+        asyncDialog.setMessage("Mengambil Data Ulasan...");
+        asyncDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, konfig.UrlGetUlasan,
                 new Response.Listener<String>() {
                     @Override
@@ -156,6 +161,7 @@ public class UlasanActivity extends AppCompatActivity {
                             //creating adapter object and setting it to recyclerview
                             AdapterUlasan adapter = new AdapterUlasan(modelUlasanArrayList, UlasanActivity.this);
                             recyclerView.setAdapter(adapter);
+                            asyncDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -2,8 +2,10 @@ package com.inventory.perpustakaan;
 
 import static com.inventory.perpustakaan.Api.konfig.UrlImageProfile;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button BtnSimpan, BtnBatal;
     SharedPreferences sharedpreferences;
     String id_user;
+    TableRow TRRiwayat;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String USERNAME_KEY = "username_key";
     public static final String PASSWORD_KEY = "password_key";
@@ -66,6 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         id_user = sharedpreferences.getString(ID_USER, null);
 
         IVprofile = findViewById(R.id.IVProfile);
+        TRRiwayat = findViewById(R.id.row_riwayat);
 
         // inisialisasi EditText
         ETnama = findViewById(R.id.ETNama);
@@ -124,6 +129,15 @@ public class ProfileActivity extends AppCompatActivity {
         SelectProfile(id_user);
 
         // fungsi button
+
+        TRRiwayat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), DaftarPeminjamanActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
         BtnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +167,6 @@ public class ProfileActivity extends AppCompatActivity {
                         AlamatInstitusi);
             }
         });
-
         BtnBatal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,7 +283,7 @@ public class ProfileActivity extends AppCompatActivity {
                             } else {
                                 // Login gagal
                                 asyncDialog.dismiss();
-                                Toast.makeText(ProfileActivity.this, "ada kesalahan", Toast.LENGTH_SHORT).show();
+                                PesanAlert();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -356,4 +369,39 @@ public class ProfileActivity extends AppCompatActivity {
         };
         Volley.newRequestQueue(this).add(request);
     }
+
+    private void PesanAlert() {
+        // Create the object of AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+
+        // Set Alert Title
+        builder.setTitle("Peringatan !");
+
+        // Set the message show for the Alert time
+        builder.setMessage("Anda belum menjadi member. \nAnda tidak dapat meminjam buku");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setPositiveButton("Daftar Member", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // When the user click yes button then app will close
+            Intent intent = new Intent(ProfileActivity.this, FormulirActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setNegativeButton("Nanti", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // If user click no then dialog box is canceled.
+            onBackPressed();
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
+    }
+
 }

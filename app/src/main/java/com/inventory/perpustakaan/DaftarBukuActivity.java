@@ -1,7 +1,10 @@
 package com.inventory.perpustakaan;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +33,8 @@ import java.util.Map;
 public class DaftarBukuActivity extends AppCompatActivity implements IClickListener {
     private RecyclerView recyclerView;
     private ArrayList<ModelBuku> modelBukuArrayList;
+    Button BTNkategori0, BTNkategori1, BTNkategori2, BTNkategori3, BTNkategori4, BTNkategori5,
+            BTNkategori6, BTNkategori7, BTNkategori8, BTNkategori9,  BTNkategori10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +42,67 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
         recyclerView = findViewById(R.id.idCourseRV);
         modelBukuArrayList = new ArrayList<>();
 
+        BTNkategori0 = findViewById(R.id.BTNkategori0);
+        BTNkategori1 = findViewById(R.id.BTNkategori1);
+        BTNkategori2 = findViewById(R.id.BTNkategori2);
+        BTNkategori3 = findViewById(R.id.BTNkategori3);
+        BTNkategori4 = findViewById(R.id.BTNkategori4);
+        BTNkategori5 = findViewById(R.id.BTNkategori5);
+        BTNkategori6 = findViewById(R.id.BTNkategori6);
+        BTNkategori7 = findViewById(R.id.BTNkategori7);
+        BTNkategori8 = findViewById(R.id.BTNkategori8);
+        BTNkategori9 = findViewById(R.id.BTNkategori9);
+        BTNkategori10 = findViewById(R.id.BTNkategori10);
+
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.buku);
 
-        GetDataBuku();
+        GetDataBuku("0");
+
+        View.OnClickListener kategoriOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modelBukuArrayList.clear();
+                String kategori = (String) view.getTag();
+                GetDataBuku(kategori);
+            }
+        };
+
+        BTNkategori0.setOnClickListener(kategoriOnClickListener);
+        BTNkategori0.setTag("0");
+
+        BTNkategori1.setOnClickListener(kategoriOnClickListener);
+        BTNkategori1.setTag("1");
+
+        BTNkategori2.setOnClickListener(kategoriOnClickListener);
+        BTNkategori2.setTag("2");
+
+        BTNkategori3.setOnClickListener(kategoriOnClickListener);
+        BTNkategori3.setTag("3");
+
+        BTNkategori4.setOnClickListener(kategoriOnClickListener);
+        BTNkategori4.setTag("4");
+
+        BTNkategori5.setOnClickListener(kategoriOnClickListener);
+        BTNkategori5.setTag("5");
+
+        BTNkategori6.setOnClickListener(kategoriOnClickListener);
+        BTNkategori6.setTag("6");
+
+        BTNkategori7.setOnClickListener(kategoriOnClickListener);
+        BTNkategori7.setTag("7");
+
+        BTNkategori8.setOnClickListener(kategoriOnClickListener);
+        BTNkategori8.setTag("8");
+
+        BTNkategori9.setOnClickListener(kategoriOnClickListener);
+        BTNkategori9.setTag("9");
+
+        BTNkategori10.setOnClickListener(kategoriOnClickListener);
+        BTNkategori10.setTag("10");
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -69,8 +128,11 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
         });
     }
 
-    private void GetDataBuku() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, konfig.UrlGetDataBuku,
+    private void GetDataBuku(String id_rak) {
+        ProgressDialog asyncDialog = new ProgressDialog(DaftarBukuActivity.this);
+        asyncDialog.setMessage("Mengambil Data Buku...");
+        asyncDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, konfig.UrlGetDataBukuByRak,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -103,6 +165,7 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
                             //creating adapter object and setting it to recyclerview
                             AdapterBuku adapter = new AdapterBuku(modelBukuArrayList, DaftarBukuActivity.this, DaftarBukuActivity.this);
                             recyclerView.setAdapter(adapter);
+                            asyncDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -118,7 +181,7 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("rating", String.valueOf('0'));
+                params.put("id_rak", id_rak);
                 return params;
             }
         };

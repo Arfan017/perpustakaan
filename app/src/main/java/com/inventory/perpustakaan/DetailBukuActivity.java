@@ -1,5 +1,8 @@
 package com.inventory.perpustakaan;
 
+import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
+import static com.inventory.perpustakaan.Api.konfig.UrlImageProfile;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.inventory.perpustakaan.Adapter.AdapterDashboard;
 import com.inventory.perpustakaan.Api.konfig;
 import com.inventory.perpustakaan.Model.ModelBuku;
@@ -191,7 +195,7 @@ public class DetailBukuActivity extends AppCompatActivity {
                                 gambar_buku = jsonObject.getString("gambar_buku");
                                 rating = jsonObject.getString("rating");
 
-//                                IVGambarBuku.set(no_member);
+                                Glide.with(DetailBukuActivity.this).load(UrlImageBuku + gambar_buku).into(IVGambarBuku);
                                 TVJudulBuku.setText(nama_buku);
                                 TVPenerbitBuku1.setText("By: " + penerbit);
                                 TVPenerbitBuku2.setText(": " + penerbit);
