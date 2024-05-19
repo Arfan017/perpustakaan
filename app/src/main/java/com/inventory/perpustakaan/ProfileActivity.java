@@ -128,8 +128,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         SelectProfile(id_user);
 
-        // fungsi button
-
         TRRiwayat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
                         AlamatInstitusi);
             }
         });
+
         BtnBatal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -394,8 +393,10 @@ public class ProfileActivity extends AppCompatActivity {
         // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setNegativeButton("Nanti", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
-            onBackPressed();
             dialog.cancel();
+            startActivity(new Intent(getApplicationContext(), DaftarBukuActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            finish();
         });
 
         // Create the Alert dialog
@@ -403,5 +404,4 @@ public class ProfileActivity extends AppCompatActivity {
         // Show the Alert Dialog box
         alertDialog.show();
     }
-
 }
