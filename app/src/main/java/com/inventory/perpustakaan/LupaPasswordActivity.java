@@ -1,28 +1,24 @@
 package com.inventory.perpustakaan;
 
-import static android.content.ContentValues.TAG;
-
 import static com.inventory.perpustakaan.Captcha.SECRET_KEY;
 import static com.inventory.perpustakaan.Captcha.SITE_KEY;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -40,107 +36,58 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
-public class LoginActivity extends AppCompatActivity {
-    TextView TvLupaPassword, TvDaftar;
-    EditText EtUsername, EtPassword;
-    Button BtnLogin;
-    String username, password;
+public class LupaPasswordActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String USERNAME_KEY = "username_key";
-    public static final String PASSWORD_KEY = "password_key";
-    public static final String ID_USER = "id_user";
-    public static final String STATUS_MEMBER = "status_member";
-    SharedPreferences sharedpreferences;
+    EditText ETemail_lupapass, ETpassword_lupapass, ETkonfirpassword_lupapass;
+    Button BTNgantipass;
+    String Email, PassBaru, KonfPassBaru;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_lupa_password);
 
-        sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        ETemail_lupapass = findViewById(R.id.ETemail_lupapass);
+        ETpassword_lupapass = findViewById(R.id.ETpassword_lupapass);
+        ETkonfirpassword_lupapass = findViewById(R.id.ETkonfirpassword_lupapass);
+        BTNgantipass = findViewById(R.id.BTNgantipass);
 
-        username = sharedpreferences.getString(USERNAME_KEY, null);
-        password = sharedpreferences.getString(PASSWORD_KEY, null);
-
-        EtUsername = findViewById(R.id.ETusernamelogin);
-        EtPassword = findViewById(R.id.ETpasswordlogin);
-        TvLupaPassword = findViewById(R.id.TVlupapassword);
-        TvDaftar = findViewById(R.id.TVdaftar);
-        BtnLogin = findViewById(R.id.BTNlogin);
-
-        BtnLogin.setOnClickListener(new View.OnClickListener() {
+        BTNgantipass.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                verifyGoogleReCAPTCHA();
-            }
-        });
+            public void onClick(View v) {
+                Email = ETemail_lupapass.getText().toString();
+                PassBaru = ETpassword_lupapass.getText().toString();
+                KonfPassBaru = ETkonfirpassword_lupapass.getText().toString();
 
-        TvDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegistrasiActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        TvLupaPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, LupaPasswordActivity.class);
-                startActivity(intent);
-                finish();
+                if (PassBaru.equals(KonfPassBaru)){
+                    verifyGoogleReCAPTCHA();
+                } else {
+                    Toast.makeText(LupaPasswordActivity.this, "Password dan Konfirmasi Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (username != null && password != null) {
-            Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-            finish();
-            startActivity(i);
-        }
-    }
-
-    private void loginApp(String username, String password) {
-        // Buatkan request untuk mengirim data ke server
-        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-        StringRequest request = new StringRequest(Request.Method.POST, konfig.UrlUserLogin,
+    private void LupasPass(String Email, String PassBaru) {
+        StringRequest request = new StringRequest(Request.Method.POST, konfig.UrlUserLupaPassword,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
                             boolean success = jsonObject.getBoolean("success");
-                            String[] messageSplit = message.split("[ ]");
+                            String message = jsonObject.getString("message");
 
                             if (success) {
-                                String id = messageSplit[3];
-                                String status_member = messageSplit[4];
-
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(USERNAME_KEY, username);
-                                editor.putString(PASSWORD_KEY, password);
-                                editor.putString(ID_USER, id);
-                                editor.putString(STATUS_MEMBER, status_member);
-
-                                editor.commit();
-
-                                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                                Toast.makeText(LupaPasswordActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LupaPasswordActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
-
-                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                             } else {
                                 // Login gagal
-                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LupaPasswordActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -148,22 +95,22 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 },
 
-                new com.android.volley.Response.ErrorListener() {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LupaPasswordActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
-
             @Override
             protected Map<String, String> getParams() {
-                // Mengirim data username dan password ke server
+                // Mengirim data ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("username", username.toString());
-                params.put("password", password.toString());
+                params.put("email", Email);
+                params.put("password", PassBaru);
                 return params;
             }
         };
+        // Menambahkan request ke antrian request Volley
         Volley.newRequestQueue(this).add(request);
     }
 
@@ -195,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                                     CommonStatusCodes.getStatusCodeString(apiException.getStatusCode()));
                         } else {
                             // below line is use to display a toast message for any error.
-                            Toast.makeText(LoginActivity.this, "Error found is : " + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LupaPasswordActivity.this, "Error found is : " + e, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -221,11 +168,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (jsonObject.getBoolean("success")) {
                                 // if the response is successful then we are
                                 // showing below toast message.
-                                Toast.makeText(LoginActivity.this, "User verified with reCAPTCHA", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LupaPasswordActivity.this, "User verified with reCAPTCHA", Toast.LENGTH_SHORT).show();
 
-                                String username = EtUsername.getText().toString().trim();
-                                String password = EtPassword.getText().toString();
-                                loginApp(username.trim(), password.trim());
+                                LupasPass(Email, KonfPassBaru);
+
                             } else {
                                 // if the response if failure we are displaying
                                 // a below toast message.
@@ -260,5 +206,4 @@ public class LoginActivity extends AppCompatActivity {
         };
         Volley.newRequestQueue(this).add(request);
     }
-
 }

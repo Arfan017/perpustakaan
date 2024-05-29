@@ -1,7 +1,7 @@
 package com.inventory.perpustakaan.Api;
 
 public class konfig {
-    public static String ip = "192.168.1.9";
+    public static String ip = "192.168.1.5";
     public static String api = "http://" + ip + "/perpustakaan/php/query/";
     /* RS 192.168.5.147*/
     public static final String UrlImageBuku = "http://" + ip + "/perpustakaan/images/images_buku/";
@@ -19,5 +19,6 @@ public class konfig {
     public static final String UrlGetUlasan = api + "urlgetulasan.php";
     public static final String UrlAddUlasan = api + "addulasan.php";
     public static final String UrlPinjamBuku = api + "addpinjambuku.php";
+    public static final String UrlUserLupaPassword = api + "userlupapass.php";
 
 }

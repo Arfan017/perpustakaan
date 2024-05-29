@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Perpustakaan"
         tools:targetApi="31">
         <activity
+            android:name=".LupaPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".AturanActivity"
             android:exported="false" />
         <activity

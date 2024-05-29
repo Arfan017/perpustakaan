@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="Judul Buku"
                     android:textSize="14dp"
-                    android:maxLines = "2"
+                    android:maxLines = "1"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="By: Penerbit"
                     android:textSize="16dp"
+                    android:maxLines = "1"
                     android:textStyle="italic"/>
 
 
