@@ -17,6 +17,13 @@
         android:theme="@style/Theme.Perpustakaan"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_main2"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.Perpustakaan.NoActionBar"
+            tools:targetApi="24" />
+        <activity
             android:name=".LupaPasswordActivity"
             android:exported="false" />
         <activity
@@ -52,7 +59,7 @@
             android:exported="false" />
         <activity
             android:name=".FormulirActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".RegistrasiActivity"
             android:exported="false" />

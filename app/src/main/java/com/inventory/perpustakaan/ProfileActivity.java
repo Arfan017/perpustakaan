@@ -387,7 +387,7 @@ public class ProfileActivity extends AppCompatActivity {
             // When the user click yes button then app will close
             Intent intent = new Intent(ProfileActivity.this, FormulirActivity.class);
             startActivity(intent);
-            finish();
+//            finish();
         });
 
         // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.

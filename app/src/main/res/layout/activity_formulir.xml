@@ -1,264 +1,469 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".FormulirActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
         android:orientation="vertical">
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:gravity="center"-->
-        <!--            android:layout_marginTop="20dp">-->
-
-        <!--            <ImageView-->
-        <!--                android:layout_width="70dp"-->
-        <!--                android:layout_height="70dp"-->
-        <!--                android:src="@drawable/logo" />-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginHorizontal="10dp"-->
-        <!--                android:text="From Kartu Anggota"-->
-        <!--                android:textSize="20dp"-->
-        <!--                android:textStyle="bold" />-->
-
-        <!--        </LinearLayout>-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:layout_marginBottom="30dp"
-                android:src="@drawable/logo"
-                app:civ_border_color="#b7e0ff"
-                app:civ_border_width="2dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="No Identitas (KTP/KTM/Pelajar/SIM)"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETnoidentitas"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="No Identitas"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Nama Lengkap"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETnama"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Nama"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Jenis Kelamin"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETjeniskelamin"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Jenis Kelamin"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Tempat tanggal Lahir"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETttgllahir"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Tempat tanggal Lahir"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Alamat Sesuai Identitas"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETalamat1"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Alamat Sesuai Identitas"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Alamat Tinggal saat ini"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETalamat2"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Alamat Tinggal saat ini"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="No Hp/Telphone"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETnotelp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="No Hp/Telphone"
-                android:textSize="14dp"
-                android:paddingLeft="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Pekerjaan"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETperkerjaan"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Pekerjaan"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Nama Institusi/Sekolah"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETnamainstitusi"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Nama Institusi/Sekolah"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="Alamat Institusi/Sekolah"
-                android:textSize="14dp" />
-
-            <EditText
-                android:id="@+id/ETalamatinstitusi"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_outline"
-                android:hint="Alamat Institusi/Sekolah"
-                android:paddingLeft="10dp"
-                android:textSize="14dp" />
-
-            <Button
-                android:id="@+id/BTNkirim"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_buton"
-                android:letterSpacing="0.2"
-                android:text="Daftar"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                android:layout_marginBottom="40dp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Daftar member"
+            android:textSize="24dp" />
 
     </LinearLayout>
 
-</ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="300dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="vertical">-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_account"
+            app:civ_border_color="#b7e0ff"
+            app:civ_border_width="2dp" />
 
-    <!--<Button-->
-    <!--    android:layout_width="150dp"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:background="@drawable/bg_buton"-->
-    <!--    android:letterSpacing="0.2"-->
-    <!--    android:text="Registrasi"-->
-    <!--    android:textColor="@color/white"-->
-    <!--    android:textStyle="bold" />-->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+            <!--No Identitas-->
+            <TableRow>
 
-    <!--<TextView-->
-    <!--    android:layout_width="wrap_content"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_marginTop="10dp"-->
-    <!--    android:text="Belum punya akun? Login" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="No Identitas"
+                    android:textSize="15dp" />
 
-    <!--</LinearLayout>-->
+                <EditText
+                    android:id="@+id/ETnoidentitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="No Identitas"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--nama-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Nama Lengkap  "
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETnama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--jenkel-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Jenis kelamin"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETjeniskelamin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Jenis kelamin"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Ttgl lahir-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="TTL"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETttgllahir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tempat, Tanggal Lahir"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Email-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Alamat 1"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETalamat1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alamat tinggal sesuai identitas"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Alamat Sesuai Kartu Identitas-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Alamat 2 "
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETalamat2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alamat tinggal saat ini"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Alamat tinggal saat ini-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="No. HP"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETnotelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="No Hp/Telphone"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--NoHp-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Pekerjaan"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETperkerjaan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pekerjaan"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Pekerjaan-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Nama Institusi"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETnamainstitusi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama Institusi/Sekolah"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Nama Institusi/Sekolah-->
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Alamat Institusi"
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/ETalamatinstitusi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama Institusi/Sekolah"
+                    android:textSize="15dp" />
+
+            </TableRow>
+            <!--Alamat Institusi/Sekolah-->
+            <!--                <TableRow>-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="45dp"-->
+            <!--                        android:layout_gravity="start"-->
+            <!--                        android:gravity="center"-->
+            <!--                        android:text="Alamat Institusi"-->
+            <!--                        android:textSize="15dp" />-->
+
+            <!--                    <EditText-->
+            <!--                        android:id="@+id/EditAlamatInstitusi"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:hint="Alamat Institusi/Sekolah"-->
+            <!--                        android:textSize="15dp" />-->
+
+            <!--                </TableRow>-->
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/BTNkirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_buton"
+            android:letterSpacing="0.2"
+            android:text="DAFTAR"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_margin="20dp"-->
+    <!--                android:orientation="vertical">-->
+
+    <!--                <de.hdodenhof.circleimageview.CircleImageView-->
+    <!--                    android:id="@+id/profile_image"-->
+    <!--                    android:layout_width="170dp"-->
+    <!--                    android:layout_height="170dp"-->
+    <!--                    android:layout_marginBottom="30dp"-->
+    <!--                    android:src="@drawable/logo"-->
+    <!--                    app:civ_border_color="#b7e0ff"-->
+    <!--                    app:civ_border_width="2dp"-->
+    <!--                    android:layout_gravity="center"/>-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="No Identitas (KTP/KTM/Pelajar/SIM)"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETnoidentitas"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="No Identitas"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Nama Lengkap"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETnama"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Nama"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Jenis Kelamin"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETjeniskelamin"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Jenis Kelamin"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Tempat tanggal Lahir"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETttgllahir"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Tempat tanggal Lahir"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Alamat Sesuai Identitas"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETalamat1"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Alamat Sesuai Identitas"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Alamat Tinggal saat ini"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETalamat2"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Alamat Tinggal saat ini"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="No Hp/Telphone"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETnotelp"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="No Hp/Telphone"-->
+    <!--                    android:textSize="14dp"-->
+    <!--                    android:paddingLeft="10dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Pekerjaan"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETperkerjaan"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Pekerjaan"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Nama Institusi/Sekolah"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETnamainstitusi"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Nama Institusi/Sekolah"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="start"-->
+    <!--                    android:text="Alamat Institusi/Sekolah"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <EditText-->
+    <!--                    android:id="@+id/ETalamatinstitusi"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="45dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:background="@drawable/bg_outline"-->
+    <!--                    android:hint="Alamat Institusi/Sekolah"-->
+    <!--                    android:paddingLeft="10dp"-->
+    <!--                    android:textSize="14dp" />-->
+
+    <!--                <Button-->
+    <!--                    android:id="@+id/BTNkirim"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="50dp"-->
+    <!--                    android:background="@drawable/bg_buton"-->
+    <!--                    android:letterSpacing="0.2"-->
+    <!--                    android:text="Daftar"-->
+    <!--                    android:textColor="@color/white"-->
+    <!--                    android:textSize="14dp"-->
+    <!--                    android:layout_marginBottom="60dp"-->
+    <!--                    android:textStyle="bold" />-->
+    <!--            </LinearLayout>-->
+</LinearLayout>

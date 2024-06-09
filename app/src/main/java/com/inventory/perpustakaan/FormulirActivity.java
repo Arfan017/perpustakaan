@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,17 +53,17 @@ public class FormulirActivity extends AppCompatActivity {
             EtAlamat2, EtNoTelp, EtPekerjaan, EtNamaInstitusi, EtAlamatInstitusi;
     Button BtnKirim;
     String id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-            alamat2, notelp, pekerjaan, namatinstitusi,alamatinstitusi, encodedImageString;
+            alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi, encodedImageString;
     SharedPreferences sharedpreferences;
     CircleImageView circleImageprofile;
     Bitmap bitmap;
+    int SizeofImage;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String STATUS_MEMBER = "status_member";
     public static final String ID_USER = "id_user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_formulir);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -85,7 +86,7 @@ public class FormulirActivity extends AppCompatActivity {
         BtnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String _id = id;
+                String _id = id;
                 noidentitas = EtNoIdentitas.getText().toString();
                 nama = EtNama.getText().toString();
                 jeniskelamin = EtJenisKelamin.getText().toString();
@@ -97,7 +98,7 @@ public class FormulirActivity extends AppCompatActivity {
                 namatinstitusi = EtNamaInstitusi.getText().toString();
                 alamatinstitusi = EtAlamatInstitusi.getText().toString();
 
-                Daftar(id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
+                Daftar(_id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
                         alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
             }
         });
@@ -128,6 +129,12 @@ public class FormulirActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         if (requestCode == 1 && resultCode == RESULT_OK){
@@ -135,8 +142,13 @@ public class FormulirActivity extends AppCompatActivity {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(filepath);
                 bitmap = BitmapFactory.decodeStream(inputStream);
-                circleImageprofile.setImageBitmap(bitmap);
                 encodebitmap(bitmap);
+
+                if (SizeofImage > 1000) {
+                    Toast.makeText(FormulirActivity.this, "Ukuran gambar melebihi 1MB)", Toast.LENGTH_SHORT).show();
+                } else {
+                    circleImageprofile.setImageBitmap(bitmap);
+                }
             } catch (Exception ex) {
 //                throw new RuntimeException(ex);
             }
@@ -148,6 +160,7 @@ public class FormulirActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteofimage = byteArrayOutputStream.toByteArray();
+        SizeofImage = Integer.valueOf(byteofimage.length/2014);
         encodedImageString = android.util.Base64.encodeToString(byteofimage, Base64.DEFAULT);
     }
 
@@ -217,8 +230,7 @@ public class FormulirActivity extends AppCompatActivity {
         editor.commit();
 
         // Set the message show for the Alert time
-        builder.setMessage("Anda telah mendaftar sebagai member \n" +
-                "Tunggu verifikasi admin untuk melanjuti peminjaman buku.");
+        builder.setMessage("Anda telah mendaftar sebagai member, silahkan tunggu verifikasi admin.");
 
         // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
         builder.setCancelable(false);
