@@ -39,6 +39,7 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar_buku);
+
         recyclerView = findViewById(R.id.idCourseRV);
         modelBukuArrayList = new ArrayList<>();
 

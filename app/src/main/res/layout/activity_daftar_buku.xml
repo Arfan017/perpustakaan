@@ -46,7 +46,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="FILSAFAT DAN PSIKOLOGI"
+                    android:text="AGAMA"
                     android:textSize="12dp" />
 
                 <Button
@@ -56,7 +56,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="AGAMA"
+                    android:text="FILSAFAT DAN PSIKOLOGI"
                     android:textSize="12dp" />
 
                 <Button
@@ -86,7 +86,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="SAINS DAN METEMATIKA"
+                    android:text="SASTRA"
                     android:textSize="12dp" />
 
                 <Button
@@ -96,7 +96,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="TEKNOLOGI"
+                    android:text="SEJARAH DAN GEOGRAFI"
                     android:textSize="12dp" />
 
                 <Button
@@ -106,7 +106,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="KESENIAN DAN REKREASI"
+                    android:text="KOMPUTER INFORMASI"
                     android:textSize="12dp" />
 
                 <Button
@@ -116,7 +116,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="SASTRA"
+                    android:text="SAINS DAN MATEMATIKA"
                     android:textSize="12dp" />
 
                 <Button
@@ -126,7 +126,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="SEJARAH DAN GEOGRAFI"
+                    android:text="KESENIAN DAN REKREASI"
                     android:textSize="12dp" />
 
                 <Button
@@ -136,7 +136,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_outline"
                     android:paddingHorizontal="10dp"
-                    android:text="KOMPUTER INFORMASI REFERENSI UMUM"
+                    android:text="TEKNOLOGI"
                     android:textSize="12dp" />
 
             </LinearLayout>
