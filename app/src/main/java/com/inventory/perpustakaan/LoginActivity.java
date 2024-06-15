@@ -75,7 +75,13 @@ public class LoginActivity extends AppCompatActivity {
         BtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                verifyGoogleReCAPTCHA();
+                if (EtUsername.getText().toString().isEmpty()) {
+                    EtUsername.setError("Username tidak boleh kosong");
+                } else if (EtPassword.getText().toString().isEmpty()) {
+                    EtPassword.setError("Password tidak boleh kosong");
+                }else {
+                    verifyGoogleReCAPTCHA();
+                }
             }
         });
 

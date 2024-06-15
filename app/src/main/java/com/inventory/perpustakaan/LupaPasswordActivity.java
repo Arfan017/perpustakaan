@@ -60,11 +60,19 @@ public class LupaPasswordActivity extends AppCompatActivity {
                 Email = ETemail_lupapass.getText().toString();
                 PassBaru = ETpassword_lupapass.getText().toString();
                 KonfPassBaru = ETkonfirpassword_lupapass.getText().toString();
-
-                if (PassBaru.equals(KonfPassBaru)){
-                    verifyGoogleReCAPTCHA();
+                if (ETemail_lupapass.getText().toString().isEmpty()){
+                    ETemail_lupapass.setError("Email tidak boleh kosong");
+                } else if (ETpassword_lupapass.getText().toString().isEmpty()) {
+                    ETpassword_lupapass.setError("Password tidak boleh kosong");
+                } else if (ETkonfirpassword_lupapass.getText().toString().isEmpty()) {
+                    ETkonfirpassword_lupapass.setError("Konfirmasi Password tidak boleh kosong");
                 } else {
-                    Toast.makeText(LupaPasswordActivity.this, "Password dan Konfirmasi Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                    if (PassBaru.equals(KonfPassBaru)){
+                        verifyGoogleReCAPTCHA();
+                    } else
+                    {
+                        Toast.makeText(LupaPasswordActivity.this, "Password dan Konfirmasi Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
