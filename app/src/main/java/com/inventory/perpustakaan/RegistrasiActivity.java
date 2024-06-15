@@ -68,11 +68,23 @@ public class RegistrasiActivity extends AppCompatActivity {
                 password = EtPassword.getText().toString();
                 username = EtUsername.getText().toString();
                 konfirpassword = EtKonfirPassword.getText().toString();
-                if (password.equals(konfirpassword)){
-                    verifyGoogleReCAPTCHA();
-                }
-                else{
-                    Toast.makeText(RegistrasiActivity.this, "Password dan Konfirmasi Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                if (EtNama.getText().toString().isEmpty()){
+                    EtNama.setError("Nama tidak boleh kosong");
+                } else if (EtEmail.getText().toString().isEmpty()) {
+                    EtEmail.setError("Email tidak boleh kosong");
+                } else if (EtPassword.getText().toString().isEmpty()) {
+                    EtPassword.setError("Password tidak boleh kosong");
+                } else if (EtUsername.getText().toString().isEmpty()) {
+                    EtUsername.setError("Username tidak boleh kosong");
+                } else if (EtKonfirPassword.getText().toString().isEmpty()) {
+                    EtKonfirPassword.setError("Konfirmasi Password tidak boleh kosong");
+                }else{
+                    if (password.equals(konfirpassword)) {
+                        verifyGoogleReCAPTCHA();
+                    }
+                    else {
+                        Toast.makeText(RegistrasiActivity.this, "Password dan Konfirmasi Password Tidak Sama", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

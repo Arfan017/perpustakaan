@@ -152,17 +152,39 @@ public class ProfileActivity extends AppCompatActivity {
                 String NamaInstitusi = EditNamaInstitusi.getText().toString();
                 String AlamatInstitusi = EditAlamatInstitusi.getText().toString();
 
-                EditProfile(NoIdentitas,
-                        Nama,
-                        Jenkel,
-                        Ttl,
-                        Email,
-                        AlamatIdentitas,
-                        AlamatSekarang,
-                        Nohp,
-                        Pekerjaan,
-                        NamaInstitusi,
-                        AlamatInstitusi);
+                if (EditNoIdentitas.getText().toString().isEmpty()){
+                    EditNoIdentitas.setError("No Identitas tidak boleh kosong");
+                } else if (EditNama.getText().toString().isEmpty()) {
+                    EditNama.setError("Nama tidak boleh kosong");
+                } else if (EditJenkel.getText().toString().isEmpty()) {
+                    EditJenkel.setError("Jenis Jekamin tidak boleh kosong");
+                } else if (EditTtl.getText().toString().isEmpty()) {
+                    EditTtl.setError("Tempat, tanggal lahir tidak boleh kosong");
+                } else if (EditAlamatIdentitas.getText().toString().isEmpty()) {
+                    EditAlamatIdentitas.setError("Alamat tidak boleh kosong");
+                } else if (EditAlamatSekarang.getText().toString().isEmpty()) {
+                    EditAlamatSekarang.setError("Alamat tidak boleh kosong");
+                } else if (EditNohp.getText().toString().isEmpty()) {
+                    EditNohp.setError("No Hp tidak boleh kosong");
+                } else if (EditPekerjaan.getText().toString().isEmpty()) {
+                    EditPekerjaan.setError("Pekerjaan tidak boleh kosong");
+                } else if (EditNamaInstitusi.getText().toString().isEmpty()) {
+                    EditNamaInstitusi.setError("Nama Institusi tidak boleh kosong");
+                } else if (EditAlamatInstitusi.getText().toString().isEmpty()) {
+                    EditAlamatInstitusi.setError("Alamat Institusi tidak boleh kosong");
+                } else {
+                    EditProfile(NoIdentitas,
+                            Nama,
+                            Jenkel,
+                            Ttl,
+                            Email,
+                            AlamatIdentitas,
+                            AlamatSekarang,
+                            Nohp,
+                            Pekerjaan,
+                            NamaInstitusi,
+                            AlamatInstitusi);
+                }
             }
         });
 

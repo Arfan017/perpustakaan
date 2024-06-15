@@ -98,6 +98,28 @@ public class FormulirActivity extends AppCompatActivity {
                 namatinstitusi = EtNamaInstitusi.getText().toString();
                 alamatinstitusi = EtAlamatInstitusi.getText().toString();
 
+                if (EtNoIdentitas.getText().toString().isEmpty()){
+                    EtNoIdentitas.setError("No Identitas tidak boleh kosong");
+                } else if (EtNama.getText().toString().isEmpty()) {
+                    EtNama.setError("Nama tidak boleh kosong");
+                } else if (EtJenisKelamin.getText().toString().isEmpty()) {
+                    EtJenisKelamin.setError("Jenis Jekamin tidak boleh kosong");
+                } else if (EtTtgLahir.getText().toString().isEmpty()) {
+                    EtTtgLahir.setError("Tempat, tanggal lahir tidak boleh kosong");
+                } else if (EtAlamat1.getText().toString().isEmpty()) {
+                    EtAlamat1.setError("Alamat tidak boleh kosong");
+                } else if (EtAlamat2.getText().toString().isEmpty()) {
+                    EtAlamat2.setError("Alamat tidak boleh kosong");
+                } else if (EtNoTelp.getText().toString().isEmpty()) {
+                    EtNoTelp.setError("No Hp tidak boleh kosong");
+                } else if (EtPekerjaan.getText().toString().isEmpty()) {
+                    EtPekerjaan.setError("Pekerjaan tidak boleh kosong");
+                } else if (EtNamaInstitusi.getText().toString().isEmpty()) {
+                    EtNamaInstitusi.setError("Nama Institusi tidak boleh kosong");
+                } else if (EtAlamatInstitusi.getText().toString().isEmpty()) {
+                    EtAlamatInstitusi.setError("Alamat Institusi tidak boleh kosong");
+                }
+
                 Daftar(_id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
                         alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
             }
