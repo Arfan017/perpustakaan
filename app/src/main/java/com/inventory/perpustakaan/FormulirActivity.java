@@ -66,6 +66,7 @@ public class FormulirActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulir);
 
+        // Initialization
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         id = sharedpreferences.getString(ID_USER, null);
 
@@ -80,26 +81,34 @@ public class FormulirActivity extends AppCompatActivity {
         EtNamaInstitusi = findViewById(R.id.ETnamainstitusi);
         EtAlamatInstitusi = findViewById(R.id.ETalamatinstitusi);
         circleImageprofile = findViewById(R.id.profile_image);
-
         BtnKirim = findViewById(R.id.BTNkirim);
 
         BtnKirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String _id = id;
-                noidentitas = EtNoIdentitas.getText().toString();
-                nama = EtNama.getText().toString();
-                jeniskelamin = EtJenisKelamin.getText().toString();
-                ttgllahir = EtTtgLahir.getText().toString();
-                alamat1 = EtAlamat1.getText().toString();
-                alamat2 = EtAlamat2.getText().toString();
-                notelp = EtNoTelp.getText().toString();
-                pekerjaan = EtPekerjaan.getText().toString();
-                namatinstitusi = EtNamaInstitusi.getText().toString();
-                alamatinstitusi = EtAlamatInstitusi.getText().toString();
+                // Capture data
+                noidentitas = EtNoIdentitas.getText().toString().trim();
+                nama = EtNama.getText().toString().trim();
+                jeniskelamin = EtJenisKelamin.getText().toString().trim();
+                ttgllahir = EtTtgLahir.getText().toString().trim();
+                alamat1 = EtAlamat1.getText().toString().trim();
+                alamat2 = EtAlamat2.getText().toString().trim();
+                notelp = EtNoTelp.getText().toString().trim();
+                pekerjaan = EtPekerjaan.getText().toString().trim();
+                namatinstitusi = EtNamaInstitusi.getText().toString().trim();
+                alamatinstitusi = EtAlamatInstitusi.getText().toString().trim();
 
-                Daftar(_id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-                        alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
+                // Validate data
+                if (noidentitas.isEmpty() || nama.isEmpty() || jeniskelamin.isEmpty() || ttgllahir.isEmpty() ||
+                        alamat1.isEmpty() || notelp.isEmpty() || pekerjaan.isEmpty() || namatinstitusi.isEmpty() ||
+                        alamatinstitusi.isEmpty() || encodedImageString == null) {
+                    Toast.makeText(FormulirActivity.this, "Harap isi semua data", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("FormulirActivity", "Mengirim data: " + noidentitas + ", " + nama + ", " + jeniskelamin + ", " +
+                            ttgllahir + ", " + alamat1 + ", " + alamat2 + ", " + notelp + ", " + pekerjaan + ", " +
+                            namatinstitusi + ", " + alamatinstitusi);
+                    Daftar(id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1, alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
+                }
             }
         });
 
@@ -110,20 +119,20 @@ public class FormulirActivity extends AppCompatActivity {
                         .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                         .withListener(new PermissionListener() {
                             @Override
-                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                Intent intent =  new Intent(Intent.ACTION_PICK);
+                            public void onPermissionGranted(PermissionGrantedResponse response) {
+                                Intent intent = new Intent(Intent.ACTION_PICK);
                                 intent.setType("image/*");
-                                startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+                                startActivityForResult(Intent.createChooser(intent, "Pilih gambar"), 1);
                             }
 
                             @Override
-                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
+                            public void onPermissionDenied(PermissionDeniedResponse response) {
+                                // Handle the case where permission is denied
                             }
 
                             @Override
-                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                permissionToken.continuePermissionRequest();
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest request, PermissionToken token) {
+                                token.continuePermissionRequest();
                             }
                         }).check();
             }
@@ -131,37 +140,31 @@ public class FormulirActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        if (requestCode == 1 && resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
             Uri filepath = data.getData();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(filepath);
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 encodebitmap(bitmap);
-
                 if (SizeofImage > 1000) {
-                    Toast.makeText(FormulirActivity.this, "Ukuran gambar melebihi 1MB)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FormulirActivity.this, "Ukuran gambar melebihi 1MB", Toast.LENGTH_SHORT).show();
                 } else {
                     circleImageprofile.setImageBitmap(bitmap);
                 }
             } catch (Exception ex) {
-//                throw new RuntimeException(ex);
+                ex.printStackTrace();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    };
+    }
 
     private void encodebitmap(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteofimage = byteArrayOutputStream.toByteArray();
-        SizeofImage = Integer.valueOf(byteofimage.length/2014);
-        encodedImageString = android.util.Base64.encodeToString(byteofimage, Base64.DEFAULT);
+        SizeofImage = byteofimage.length / 1024; // convert to KB
+        encodedImageString = Base64.encodeToString(byteofimage, Base64.DEFAULT);
     }
 
     private void Daftar(String id, String noidentitas, String nama, String jeniskelamin, String ttgllahir, String alamat1,
@@ -179,7 +182,6 @@ public class FormulirActivity extends AppCompatActivity {
                                 PesanAlert();
                                 Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
                             } else {
-                                // Login gagal
                                 Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
@@ -187,7 +189,6 @@ public class FormulirActivity extends AppCompatActivity {
                         }
                     }
                 },
-
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -196,7 +197,6 @@ public class FormulirActivity extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                // Mengirim data ke server
                 Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 params.put("noidentitas", noidentitas);
@@ -210,49 +210,34 @@ public class FormulirActivity extends AppCompatActivity {
                 params.put("namatinstitusi", namatinstitusi);
                 params.put("alamatinstitusi", alamatinstitusi);
                 params.put("gambar", encodedImageString);
+                Log.d("FormulirActivity", "Params: " + params.toString()); // Logging params
                 return params;
             }
         };
-        // Menambahkan request ke antrian request Volley
         Volley.newRequestQueue(this).add(request);
         Toast.makeText(FormulirActivity.this, "Mengirim data ke database", Toast.LENGTH_SHORT).show();
     }
 
-    private void PesanAlert(){
-        // Create the object of AlertDialog Builder class
+    private void PesanAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(FormulirActivity.this);
-
-        // Set Alert Title
         builder.setTitle("Pemberitahuan");
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(STATUS_MEMBER, "2");
-        editor.commit();
+        editor.apply();
 
-        // Set the message show for the Alert time
         builder.setMessage("Anda telah mendaftar sebagai member, silahkan tunggu verifikasi admin.");
-
-        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
         builder.setCancelable(false);
 
-        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
-//        builder.setPositiveButton("Daftar Member", (DialogInterface.OnClickListener) (dialog, which) -> {
-//            // When the user click yes button then app will close
-//            finish();
-//        });
-
-        // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
-        builder.setNegativeButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
-            // If user click no then dialog box is canceled.
+        builder.setNegativeButton("Ok", (dialog, which) -> {
             dialog.cancel();
             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             finish();
         });
 
-        // Create the Alert dialog
         AlertDialog alertDialog = builder.create();
-        // Show the Alert Dialog box
         alertDialog.show();
     }
+
 }
