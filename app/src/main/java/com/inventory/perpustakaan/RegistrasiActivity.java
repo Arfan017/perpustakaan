@@ -145,6 +145,7 @@ public class RegistrasiActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
+    //=================== captcha ===================//
     private void verifyGoogleReCAPTCHA() {
         // below line is use for getting our safety
         // net client and verify with reCAPTCHA

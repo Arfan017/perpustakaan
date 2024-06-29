@@ -416,9 +416,6 @@ public class ProfileActivity extends AppCompatActivity {
         builder.setNegativeButton("Nanti", (DialogInterface.OnClickListener) (dialog, which) -> {
             // If user click no then dialog box is canceled.
             dialog.cancel();
-            startActivity(new Intent(getApplicationContext(), DaftarBukuActivity.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            finish();
         });
 
         // Create the Alert dialog

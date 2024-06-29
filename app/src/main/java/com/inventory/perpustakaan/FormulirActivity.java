@@ -1,5 +1,7 @@
 package com.inventory.perpustakaan;
 
+import static com.inventory.perpustakaan.Api.konfig.UrlUserDaftar;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,58 +11,53 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.inventory.perpustakaan.Api.konfig;
 import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FormulirActivity extends AppCompatActivity {
-    EditText EtNoIdentitas, EtNama, EtJenisKelamin, EtTtgLahir, EtAlamat1,
-            EtAlamat2, EtNoTelp, EtPekerjaan, EtNamaInstitusi, EtAlamatInstitusi;
+    EditText EtNoIdentitas, EtNama, EtJenisKelamin, EtTtgLahir, EtAlamat1, EtAlamat2, EtNoTelp, EtPekerjaan, EtNamaInstitusi, EtAlamatInstitusi;
     Button BtnKirim;
-    String id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-            alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi, encodedImageString;
+    String id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1, alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi, encodedImageString;
     SharedPreferences sharedpreferences;
     CircleImageView circleImageprofile;
-    Bitmap bitmap;
+    Bitmap capturedImage;
     int SizeofImage;
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String STATUS_MEMBER = "status_member";
     public static final String ID_USER = "id_user";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,12 +95,12 @@ public class FormulirActivity extends AppCompatActivity {
                 namatinstitusi = EtNamaInstitusi.getText().toString();
                 alamatinstitusi = EtAlamatInstitusi.getText().toString();
 
-                if (EtNoIdentitas.getText().toString().isEmpty()){
+                if (EtNoIdentitas.getText().toString().isEmpty()) {
                     EtNoIdentitas.setError("No Identitas tidak boleh kosong");
                 } else if (EtNama.getText().toString().isEmpty()) {
                     EtNama.setError("Nama tidak boleh kosong");
                 } else if (EtJenisKelamin.getText().toString().isEmpty()) {
-                    EtJenisKelamin.setError("Jenis Jekamin tidak boleh kosong");
+                    EtJenisKelamin.setError("Jenis Kelamin tidak boleh kosong");
                 } else if (EtTtgLahir.getText().toString().isEmpty()) {
                     EtTtgLahir.setError("Tempat, tanggal lahir tidak boleh kosong");
                 } else if (EtAlamat1.getText().toString().isEmpty()) {
@@ -120,105 +117,118 @@ public class FormulirActivity extends AppCompatActivity {
                     EtAlamatInstitusi.setError("Alamat Institusi tidak boleh kosong");
                 }
 
-                Daftar(_id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1,
-                        alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
+                Daftar(_id, noidentitas, nama, jeniskelamin, ttgllahir, alamat1, alamat2, notelp, pekerjaan, namatinstitusi, alamatinstitusi);
             }
         });
 
         circleImageprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dexter.withActivity(FormulirActivity.this)
-                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .withListener(new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                Intent intent =  new Intent(Intent.ACTION_PICK);
-                                intent.setType("image/*");
-                                startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
-                            }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    Dexter.withActivity(FormulirActivity.this)
+                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            .withListener(new MultiplePermissionsListener() {
+                                @Override
+                                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                                    if (report.areAllPermissionsGranted()) {
+                                        Intent intent = new Intent(Intent.ACTION_PICK);
+                                        intent.setType("image/*");
+                                        startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+                                    } else {
+                                        Toast.makeText(FormulirActivity.this, "Izin diperlukan untuk mengakses penyimpanan", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
 
-                            @Override
-                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
-                            }
-
-                            @Override
-                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                permissionToken.continuePermissionRequest();
-                            }
-                        }).check();
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                                    token.continuePermissionRequest();
+                                }
+                            }).check();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType("image/*");
+                    startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+                }
             }
         });
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri filepath = data.getData();
+                try {
+                    InputStream imageStream = getContentResolver().openInputStream(filepath);
+                    capturedImage = BitmapFactory.decodeStream(imageStream);
+                    showResolution("Before resize", capturedImage);
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        if (requestCode == 1 && resultCode == RESULT_OK){
-            Uri filepath = data.getData();
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(filepath);
-                bitmap = BitmapFactory.decodeStream(inputStream);
-                encodebitmap(bitmap);
+                    capturedImage = resizeBitmap(capturedImage, 800, 800);
+                    showResolution("After resize", capturedImage);
 
-                if (SizeofImage > 1000) {
-                    Toast.makeText(FormulirActivity.this, "Ukuran gambar melebihi 1MB)", Toast.LENGTH_SHORT).show();
-                } else {
-                    circleImageprofile.setImageBitmap(bitmap);
+                    circleImageprofile.setImageBitmap(capturedImage);
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    capturedImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    SizeofImage = baos.toByteArray().length / 1024;
+
+                    if (SizeofImage > 1000) {
+                        Toast.makeText(FormulirActivity.this, "Ukuran gambar melebihi 1MB", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            } catch (Exception ex) {
-//                throw new RuntimeException(ex);
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
-    };
+    }
 
-    private void encodebitmap(Bitmap bitmap) {
+    private void showResolution(String stage, Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        String message = stage + " resolution: " + width + " x " + height;
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Log.d("Image Resolution", message);
+    }
+
+    private String encodebitmap(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] byteofimage = byteArrayOutputStream.toByteArray();
-        SizeofImage = Integer.valueOf(byteofimage.length/2014);
-        encodedImageString = android.util.Base64.encodeToString(byteofimage, Base64.DEFAULT);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     private void Daftar(String id, String noidentitas, String nama, String jeniskelamin, String ttgllahir, String alamat1,
                         String alamat2, String notelp, String pekerjaan, String namatinstitusi, String alamatinstitusi) {
-        StringRequest request = new StringRequest(Request.Method.POST, konfig.UrlUserDaftar,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            String message = jsonObject.getString("message");
 
-                            if (success) {
-                                PesanAlert();
-                                Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Login gagal
-                                Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlUserDaftar, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String message = jsonObject.getString("message");
+                    boolean success = jsonObject.getBoolean("success");
 
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(FormulirActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (success) {
+                        Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
+                        PesanAlert();
                     }
-                }) {
+                } catch (Exception e) {
+                    Toast.makeText(FormulirActivity.this, "Failed to upload image from android: " + e.toString(), Toast.LENGTH_SHORT).show();
+                    Log.e("Upload Error", e.toString());
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(FormulirActivity.this, "Failed to upload image from android", Toast.LENGTH_SHORT).show();
+                Log.e("Upload Error", error.toString());
+            }
+        }) {
             @Override
             protected Map<String, String> getParams() {
-                // Mengirim data ke server
                 Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 params.put("noidentitas", noidentitas);
@@ -231,41 +241,46 @@ public class FormulirActivity extends AppCompatActivity {
                 params.put("pekerjaan", pekerjaan);
                 params.put("namatinstitusi", namatinstitusi);
                 params.put("alamatinstitusi", alamatinstitusi);
-                params.put("gambar", encodedImageString);
+                params.put("image", encodebitmap(capturedImage));
                 return params;
             }
         };
-        // Menambahkan request ke antrian request Volley
-        Volley.newRequestQueue(this).add(request);
-        Toast.makeText(FormulirActivity.this, "Mengirim data ke database", Toast.LENGTH_SHORT).show();
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000, // Waktu tunggu dalam milidetik
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // Jumlah percobaan ulang
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
     }
 
-    private void PesanAlert(){
-        // Create the object of AlertDialog Builder class
+    private Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxWidth;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxHeight;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+    }
+
+    private void PesanAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(FormulirActivity.this);
 
-        // Set Alert Title
         builder.setTitle("Pemberitahuan");
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(STATUS_MEMBER, "2");
         editor.commit();
 
-        // Set the message show for the Alert time
         builder.setMessage("Anda telah mendaftar sebagai member, silahkan tunggu verifikasi admin.");
-
-        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
         builder.setCancelable(false);
-
-        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
-//        builder.setPositiveButton("Daftar Member", (DialogInterface.OnClickListener) (dialog, which) -> {
-//            // When the user click yes button then app will close
-//            finish();
-//        });
-
-        // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
         builder.setNegativeButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
-            // If user click no then dialog box is canceled.
             dialog.cancel();
             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
