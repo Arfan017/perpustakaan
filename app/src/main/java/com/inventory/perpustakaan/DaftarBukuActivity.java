@@ -149,7 +149,7 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
 
                                 //adding the product to product list
                                 modelBukuArrayList.add(new ModelBuku(
-                                        buku.getString("kd_buku"),
+//                                        buku.getString("kd_buku"),
                                         buku.getString("nama_buku"),
                                         buku.getString("penulis"),
                                         buku.getString("penerbit"),
@@ -193,7 +193,7 @@ public class DaftarBukuActivity extends AppCompatActivity implements IClickListe
     @Override
     public void OnItemClick(int position) {
         Intent intent = new Intent(DaftarBukuActivity.this, DetailBukuActivity.class);
-        intent.putExtra("id_buku", modelBukuArrayList.get(position).getId_buku()).toString();
+        intent.putExtra("nisn_isbn", modelBukuArrayList.get(position).getNisn_isbn()).toString();
         startActivity(intent);
     }
 }

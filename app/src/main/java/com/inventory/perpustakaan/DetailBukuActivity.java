@@ -1,7 +1,9 @@
 package com.inventory.perpustakaan;
 
 import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
-import static com.inventory.perpustakaan.Api.konfig.UrlImageProfile;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.STATUS_MEMBER;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -44,11 +46,8 @@ public class DetailBukuActivity extends AppCompatActivity {
     ImageView IVGambarBuku;
     TextView TVJudulBuku, TVPenerbitBuku1, TVPenerbitBuku2, TVPenulis, TVISBN, TVThnTerbit, TVHalaman, TVStok, TVRakBuku, TVSinopsis, TVRating;
     Button BTNPinjam, BTNUlasan;
-    String id_buku, status_member, nama_buku, penulis, penerbit, nisn_isbn, tahun_terbit, halaman_buku, nama_rak, stok, tentang, gambar_buku, rating;
+    String status_member, nama_buku, penulis, penerbit, nisn_isbn, tahun_terbit, halaman_buku, nama_rak, stok, tentang, gambar_buku, rating;
     SharedPreferences sharedpreferences;
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String STATUS_MEMBER = "status_member";
-    public static final String ID_USER = "id_user";
     String id_user;
 
     @Override
@@ -59,6 +58,8 @@ public class DetailBukuActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         id_user = sharedpreferences.getString(ID_USER, null);
+        status_member = sharedpreferences.getString(STATUS_MEMBER, null);
+
 
         IVGambarBuku = findViewById(R.id.IVGambarBuku);
         TVJudulBuku = findViewById(R.id.TVJudulBuku);
@@ -76,14 +77,13 @@ public class DetailBukuActivity extends AppCompatActivity {
         BTNPinjam = findViewById(R.id.BtnPinjam);
         BTNUlasan = findViewById(R.id.BtnUlasan);
 
-        id_buku = getIntent().getStringExtra("id_buku");
+        nisn_isbn = getIntent().getStringExtra("nisn_isbn");
 
-        CekStatusMember(id_user);
-        GetDetailDataBuku(id_buku);
+//        CekStatusMember(id_user);
+        GetDetailDataBuku(nisn_isbn);
         BTNPinjam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                status_member = sharedpreferences.getString(STATUS_MEMBER, null);
 
                 if (Integer.parseInt(status_member) == 0) {
                     PesanAlert();
@@ -91,7 +91,8 @@ public class DetailBukuActivity extends AppCompatActivity {
                     PesanAlert1();
                 } else {
                     Intent intent = new Intent(DetailBukuActivity.this, KeranjangBukuActivity.class);
-                    intent.putExtra("id_buku", id_buku);
+//                    intent.putExtra("id_buku", id_buku);
+                    intent.putExtra("nisn_isbn", nisn_isbn);
                     intent.putExtra("image", gambar_buku);
                     intent.putExtra("namabuku", nama_buku);
                     intent.putExtra("penulis", penulis);
@@ -106,7 +107,7 @@ public class DetailBukuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailBukuActivity.this, UlasanActivity.class);
-                intent.putExtra("id_buku", id_buku);
+                intent.putExtra("nisn_isbn", nisn_isbn);
                 startActivity(intent);
                 }
         });
@@ -231,7 +232,7 @@ public class DetailBukuActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("id_buku", id_buku);
+                params.put("nisn_isbn", nisn_isbn);
                 return params;
             }
         };

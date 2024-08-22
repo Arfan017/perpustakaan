@@ -1,9 +1,12 @@
 package com.inventory.perpustakaan;
 
-import static android.content.ContentValues.TAG;
-
 import static com.inventory.perpustakaan.Captcha.SECRET_KEY;
 import static com.inventory.perpustakaan.Captcha.SITE_KEY;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.PASSWORD_KEY;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.STATUS_MEMBER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.USERNAME_KEY;
 
 import android.content.Context;
 import android.content.Intent;
@@ -43,16 +46,10 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView TvLupaPassword, TvDaftar;
+    TextView TvLupaPassword, TvDaftar, Tvlanjut;
     EditText EtUsername, EtPassword;
     Button BtnLogin;
     String username, password;
-
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String USERNAME_KEY = "username_key";
-    public static final String PASSWORD_KEY = "password_key";
-    public static final String ID_USER = "id_user";
-    public static final String STATUS_MEMBER = "status_member";
     SharedPreferences sharedpreferences;
 
     @Override
@@ -70,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         EtPassword = findViewById(R.id.ETpasswordlogin);
         TvLupaPassword = findViewById(R.id.TVlupapassword);
         TvDaftar = findViewById(R.id.TVdaftar);
+        Tvlanjut = findViewById(R.id.TVlanjut);
         BtnLogin = findViewById(R.id.BTNlogin);
 
         BtnLogin.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +86,18 @@ public class LoginActivity extends AppCompatActivity {
         TvDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegistrasiActivity.class);
+                Intent intent = new Intent(LoginActivity.this, FormulirActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Tvlanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(STATUS_MEMBER, "0");
+                editor.apply();
                 startActivity(intent);
                 finish();
             }
@@ -99,9 +108,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, LupaPasswordActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
+
     }
 
     @Override
@@ -125,16 +134,15 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String message = jsonObject.getString("message");
                             boolean success = jsonObject.getBoolean("success");
-                            String[] messageSplit = message.split("[ ]");
 
                             if (success) {
-                                String id = messageSplit[3];
-                                String status_member = messageSplit[4];
+                                String id_member = jsonObject.getString("id_member");
+                                String status_member = jsonObject.getString("status_member");
 
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
                                 editor.putString(USERNAME_KEY, username);
                                 editor.putString(PASSWORD_KEY, password);
-                                editor.putString(ID_USER, id);
+                                editor.putString(ID_USER, id_member);
                                 editor.putString(STATUS_MEMBER, status_member);
 
                                 editor.commit();

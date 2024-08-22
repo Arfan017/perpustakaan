@@ -1,5 +1,8 @@
 package com.inventory.perpustakaan;
 
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,11 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,9 +34,7 @@ import java.util.Map;
 
 public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
-    String id_user;
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String ID_USER = "id_user";
+    String id_member;
     private RecyclerView recyclerView;
     private ArrayList<ModelPinjamBuku> modelPinjamBukuArrayList;
     @Override
@@ -46,7 +43,7 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_daftar_riwayat_peminjaman);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        id_user = sharedpreferences.getString(ID_USER, null);
+        id_member = sharedpreferences.getString(ID_USER, null);
 
         recyclerView = findViewById(R.id.RVBuku);
         modelPinjamBukuArrayList = new ArrayList<>();
@@ -55,7 +52,11 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.riwayat);
 
-        GetDataRiwayatPinjamBuku(id_user);
+        if (id_member != null) {
+            GetDataRiwayatPinjamBuku(id_member);
+        } else {
+            Toast.makeText(this, "Riwayat Peminjaman Kosong", Toast.LENGTH_SHORT).show();
+        }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -81,7 +82,7 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
         });
     }
 
-    private void GetDataRiwayatPinjamBuku(String id_user) {
+    private void GetDataRiwayatPinjamBuku(String id_member) {
         ProgressDialog asyncDialog = new ProgressDialog(this);
         asyncDialog.setMessage("Mengambil Data Buku...");
         asyncDialog.show();
@@ -92,28 +93,33 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
                         try {
                             //converting the string to json array object
                             JSONArray array = new JSONArray(response);
+                            if (array.length() != 0) {
+                                //traversing through all the object
+                                for (int i = 0; i < array.length(); i++) {
 
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
+                                    //getting product object from json array
+                                    JSONObject buku = array.getJSONObject(i);
 
-                                //getting product object from json array
-                                JSONObject buku = array.getJSONObject(i);
+                                    //adding the product to product list
+                                    modelPinjamBukuArrayList.add(new ModelPinjamBuku(
+                                            buku.getString("id"),
+                                            buku.getString("nama_buku"),
+                                            buku.getString("gambar_buku"),
+                                            buku.getString("tgl_pinjam"),
+                                            buku.getString("tgl_kembali"),
+                                            buku.getString("denda")
+                                    ));
+                                }
 
-                                //adding the product to product list
-                                modelPinjamBukuArrayList.add(new ModelPinjamBuku(
-                                        buku.getString("id"),
-                                        buku.getString("nama_buku"),
-                                        buku.getString("gambar_buku"),
-                                        buku.getString("tgl_pinjam"),
-                                        buku.getString("tgl_kembali"),
-                                        buku.getString("denda")
-                                ));
+                                //creating adapter object and setting it to recyclerview
+                                AdapterPinjamBuku adapter = new AdapterPinjamBuku(modelPinjamBukuArrayList, DaftarRiwayatPeminjamanActivity.this);
+                                recyclerView.setAdapter(adapter);
+                                asyncDialog.dismiss();
+                            } else {
+                                asyncDialog.dismiss();
+                                Toast.makeText(DaftarRiwayatPeminjamanActivity.this, "Riwayat Peminjaman Kosong", Toast.LENGTH_SHORT).show();
                             }
 
-                            //creating adapter object and setting it to recyclerview
-                            AdapterPinjamBuku adapter = new AdapterPinjamBuku(modelPinjamBukuArrayList, DaftarRiwayatPeminjamanActivity.this);
-                            recyclerView.setAdapter(adapter);
-                            asyncDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -129,7 +135,7 @@ public class DaftarRiwayatPeminjamanActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("id_member", id_user);
+                params.put("id_member", id_member);
                 params.put("status", "kembali");
                 return params;
             }

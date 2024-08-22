@@ -84,32 +84,38 @@ public class DashboardActivity extends AppCompatActivity implements IClickListen
                             //converting the string to json array object
                             JSONArray array = new JSONArray(response);
 
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
+                            if (array.length() != 0) {
+                                //traversing through all the object
+                                for (int i = 0; i < array.length(); i++) {
 
-                                //getting product object from json array
-                                JSONObject buku = array.getJSONObject(i);
+                                    //getting product object from json array
+                                    JSONObject buku = array.getJSONObject(i);
 
-                                //adding the product to product list
-                                modelBukuArrayList.add(new ModelBuku(
-                                        buku.getString("kd_buku"),
-                                        buku.getString("nama_buku"),
-                                        buku.getString("penulis"),
-                                        buku.getString("penerbit"),
-                                        buku.getString("nisn_isbn"),
-                                        buku.getString("tahun_terbit"),
-                                        buku.getString("halaman_buku"),
-                                        buku.getString("id_rak"),
-                                        buku.getString("stok"),
-                                        buku.getString("tentang"),
-                                        buku.getString("gambar_buku"),
-                                        buku.getString("rating")
-                                ));
+                                    //adding the product to product list
+                                    modelBukuArrayList.add(new ModelBuku(
+//                                        buku.getString("kd_buku"),
+                                            buku.getString("nama_buku"),
+                                            buku.getString("penulis"),
+                                            buku.getString("penerbit"),
+                                            buku.getString("nisn_isbn"),
+                                            buku.getString("tahun_terbit"),
+                                            buku.getString("halaman_buku"),
+                                            buku.getString("id_rak"),
+                                            buku.getString("stok"),
+                                            buku.getString("tentang"),
+                                            buku.getString("gambar_buku"),
+                                            buku.getString("rating")
+                                    ));
+                                }
+                                //creating adapter object and setting it to recyclerview
+                                AdapterDashboard adapter = new AdapterDashboard(modelBukuArrayList, DashboardActivity.this, DashboardActivity.this);
+                                recyclerView.setAdapter(adapter);
+                                asyncDialog.dismiss();
+                            } else {
+                                asyncDialog.dismiss();
+                                Toast.makeText(DashboardActivity.this, "Belum ada data", Toast.LENGTH_SHORT).show();
                             }
-                            //creating adapter object and setting it to recyclerview
-                            AdapterDashboard adapter = new AdapterDashboard(modelBukuArrayList, DashboardActivity.this, DashboardActivity.this);
-                            recyclerView.setAdapter(adapter);
-                            asyncDialog.dismiss();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

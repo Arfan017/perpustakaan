@@ -1,7 +1,7 @@
 package com.inventory.perpustakaan.Model;
 
 public class ModelBuku {
-    private String id_buku;
+//    private String id_buku;
     private String nama_buku;
     private String penulis;
     private String penerbit;
@@ -14,8 +14,8 @@ public class ModelBuku {
     private String gambar_buku;
     private String rating;
 
-    public ModelBuku(String id_buku, String nama_buku, String penulis, String penerbit, String nisn_isbn, String tahun_terbit, String halaman_buku, String id_rak, String stok, String tentang, String gambar_buku, String rating) {
-        this.id_buku = id_buku;
+    public ModelBuku(String nama_buku, String penulis, String penerbit, String nisn_isbn, String tahun_terbit, String halaman_buku, String id_rak, String stok, String tentang, String gambar_buku, String rating) {
+//        this.id_buku = id_buku;
         this.nama_buku = nama_buku;
         this.penulis = penulis;
         this.penerbit = penerbit;
@@ -29,9 +29,9 @@ public class ModelBuku {
         this.rating = rating;
     }
 
-    public String getId_buku() {
-        return id_buku;
-    }
+//    public String getId_buku() {
+//        return id_buku;
+//    }
 
     public String getNama_buku() {
         return nama_buku;
@@ -77,9 +77,9 @@ public class ModelBuku {
         return rating;
     }
 
-    public void setid_buku(String id_buku) {
-        this.id_buku = id_buku;
-    }
+//    public void setid_buku(String id_buku) {
+//        this.id_buku = id_buku;
+//    }
 
     public void setNama_buku(String nama_buku) {
         this.nama_buku = nama_buku;

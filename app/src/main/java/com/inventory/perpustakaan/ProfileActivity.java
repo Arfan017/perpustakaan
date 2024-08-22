@@ -1,6 +1,11 @@
 package com.inventory.perpustakaan;
 
 import static com.inventory.perpustakaan.Api.konfig.UrlImageProfile;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.PASSWORD_KEY;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.STATUS_MEMBER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.USERNAME_KEY;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -53,13 +58,8 @@ public class ProfileActivity extends AppCompatActivity {
     ScrollView SVedit;
     Button BtnSimpan, BtnBatal;
     SharedPreferences sharedpreferences;
-    String id_user;
+    String id_member;
     TableRow TRRiwayat;
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String USERNAME_KEY = "username_key";
-    public static final String PASSWORD_KEY = "password_key";
-    public static final String ID_USER = "id_user";
-    public static final String STATUS_MEMBER = "status_member";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        id_user = sharedpreferences.getString(ID_USER, null);
+        id_member = sharedpreferences.getString(ID_USER, null);
 
         IVprofile = findViewById(R.id.IVProfile);
         TRRiwayat = findViewById(R.id.row_riwayat);
@@ -126,7 +126,12 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
-        SelectProfile(id_user);
+        if (id_member != null) {
+            SelectProfile(id_member);
+        } else {
+            PesanAlert();
+        }
+
 
         TRRiwayat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,7 +271,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void SelectProfile(String id_user) {
+    private void SelectProfile(String id_member) {
         ProgressDialog asyncDialog = new ProgressDialog(ProfileActivity.this);
         asyncDialog.setMessage("Mengambil Data...");
         asyncDialog.show();
@@ -285,7 +290,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 String no_hp = jsonObject.getString("no_hp");
                                 String pekerjaan = jsonObject.getString("pekerjaan");
                                 String email = jsonObject.getString("email");
-                                String ttgl_lahir = jsonObject.getString("ttgl_lahir");
+                                String tgl_lahir = jsonObject.getString("tgl_lahir");
                                 String alamat = jsonObject.getString("alamat");
                                 String gambar = jsonObject.getString("gambar");
 
@@ -295,7 +300,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 ETnama.setText(nama);
                                 ETnohp.setText(no_hp);
                                 ETemail.setText(email);
-                                ETttllahir.setText(ttgl_lahir);
+                                ETttllahir.setText(tgl_lahir);
                                 ETalamat.setText(alamat);
 
                                 SVedit.setVisibility(View.GONE);
@@ -323,7 +328,7 @@ public class ProfileActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("id_user", id_user);
+                params.put("id_member", id_member);
                 return params;
             }
         };
@@ -348,7 +353,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             if (success) {
                                 asyncDialog.dismiss();
-                                SelectProfile(id_user);
+                                SelectProfile(id_member);
 
                             } else {
                                 // Login gagal
@@ -373,7 +378,7 @@ public class ProfileActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("id_user", id_user);
+                params.put("id_member", id_member);
                 params.put("NoIdentitas", NoIdentitas.toString());
                 params.put("Nama", Nama.toString());
                 params.put("Jenkel", Jenkel.toString());
@@ -399,7 +404,7 @@ public class ProfileActivity extends AppCompatActivity {
         builder.setTitle("Peringatan !");
 
         // Set the message show for the Alert time
-        builder.setMessage("Anda belum menjadi member. \nAnda tidak dapat meminjam buku");
+        builder.setMessage("Anda belum menjadi member. \nData diri masih kosong");
 
         // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
         builder.setCancelable(false);

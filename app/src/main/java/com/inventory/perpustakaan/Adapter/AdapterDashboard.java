@@ -58,7 +58,7 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.Recy
 //        Glide.with(mcontext).load(UrlImage + DataBuku.getGambar_buku()).into(holder.IVrating);
         holder.TVdesk.setText(DataBuku.getTentang());
         holder.RBrating.setRating(Float.valueOf(DataBuku.getRating()));
-        holder.id_buku = String.valueOf(DataBuku.getId_buku());
+        holder.nisn_isbn = String.valueOf(DataBuku.getNisn_isbn());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.Recy
         private TextView TVbuku, TVpenerbit, TVdesk;
         private ImageView IVbuku, IVrating;
         private Button BtnPinjam, BtnUlasan;
-        String id_buku;
+        String nisn_isbn;
 
 
         public RecyclerViewHolder(@NonNull View itemView, IClickListener iClickListener) {
@@ -82,7 +82,6 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.Recy
             TVpenerbit = itemView.findViewById(R.id.TVPenerbit);
             TVdesk = itemView.findViewById(R.id.TVDesk);
             IVbuku = itemView.findViewById(R.id.IVBUku);
-//            IVrating = itemView.findViewById(R.id.IVRating);
             BtnPinjam = itemView.findViewById(R.id.BTNPinjam);
             BtnUlasan = itemView.findViewById(R.id.BTNUlasan);
             RBrating = itemView.findViewById(R.id.RBRating);
@@ -96,7 +95,7 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.Recy
                             iClickListener.OnItemClick(pos);
 
                             Intent intent = new Intent(view.getContext(), DetailBukuActivity.class);
-                            intent.putExtra("id_buku", id_buku);
+                            intent.putExtra("nisn_isbn", nisn_isbn);
                             view.getContext().startActivity(intent);
                         }
                     }
@@ -111,7 +110,7 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.Recy
                         if (pos != RecyclerView.NO_POSITION) {
                             iClickListener.OnItemClick(pos);
                             Intent intent = new Intent(view.getContext(), UlasanActivity.class);
-                            intent.putExtra("id_buku", id_buku);
+                            intent.putExtra("nisn_isbn", nisn_isbn);
                             view.getContext().startActivity(intent);
                         }
                     }

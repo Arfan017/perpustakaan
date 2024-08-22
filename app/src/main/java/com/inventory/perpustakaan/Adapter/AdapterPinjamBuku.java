@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.inventory.perpustakaan.Model.ModelBuku;
 import com.inventory.perpustakaan.Model.ModelPinjamBuku;
 import com.inventory.perpustakaan.R;
 

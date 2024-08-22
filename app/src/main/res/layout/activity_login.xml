@@ -5,51 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     tools:context=".LoginActivity">
 
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/logo" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Perpustakaan Daerah\nKota Sorong"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Membaca untuk hidup,\nbukan hidup untuk membaca"
-                android:textSize="16dp"
-                android:textStyle="italic" />
-
-        </LinearLayout>
-
-    </LinearLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="end">
+        android:layout_gravity="end"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="80dp"
@@ -59,10 +25,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:text="Login"
             android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="10dp"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,14 +40,14 @@
 
         <EditText
             android:id="@+id/ETusernamelogin"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:hint="Username" />
 
         <EditText
             android:id="@+id/ETpasswordlogin"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:hint="Password" />
 
@@ -103,7 +69,7 @@
 
         <Button
             android:id="@+id/BTNlogin"
-            android:layout_width="135dp"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_buton"
             android:letterSpacing="0.2"
@@ -116,7 +82,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Belum punya akun? Daftar"/>
+            android:text="Belum punya akun? Daftar" />
+
+        <TextView
+            android:id="@+id/TVlanjut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Lanjut Tanpa Login ->" />
 
     </LinearLayout>
 

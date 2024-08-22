@@ -3,15 +3,15 @@ package com.inventory.perpustakaan.Model;
 public class ModelUlasan {
 
     private int id_ulasan;
-    private int id_buku;
+    private int nisn_isbn;
     private int rating;
     private String ulasan;
     private String nama;
     private String gambarbuku;
 
-    public ModelUlasan(int id_ulasan, int id_buku, int rating, String ulasan, String gambarbuku, String nama) {
+    public ModelUlasan(int id_ulasan, int nisn_isbn, int rating, String ulasan, String gambarbuku, String nama) {
         this.id_ulasan = id_ulasan;
-        this.id_buku = id_buku;
+        this.nisn_isbn = nisn_isbn;
         this.rating = rating;
         this.ulasan = ulasan;
         this.gambarbuku = gambarbuku;
@@ -43,12 +43,12 @@ public class ModelUlasan {
         this.id_ulasan = id_ulasan;
     }
 
-    public int getId_buku() {
-        return id_buku;
+    public int getnisn_isbn() {
+        return nisn_isbn;
     }
 
-    public void setId_buku(int id_buku) {
-        this.id_buku = id_buku;
+    public void setnisn_isbn(int nisn_isbn) {
+        this.nisn_isbn = nisn_isbn;
     }
 
     public int getRating() {

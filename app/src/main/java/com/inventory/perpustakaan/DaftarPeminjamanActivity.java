@@ -1,5 +1,8 @@
 package com.inventory.perpustakaan;
 
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,10 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.inventory.perpustakaan.Adapter.AdapterDashboard;
 import com.inventory.perpustakaan.Adapter.AdapterPinjamBuku;
 import com.inventory.perpustakaan.Api.konfig;
-import com.inventory.perpustakaan.Model.ModelBuku;
 import com.inventory.perpustakaan.Model.ModelPinjamBuku;
 
 import org.json.JSONArray;
@@ -33,30 +34,27 @@ import java.util.Map;
 public class DaftarPeminjamanActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<ModelPinjamBuku> modelPinjamBukuArrayList;
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String ID_USER = "id_user";
     SharedPreferences sharedpreferences;
-    String id_user;
+    String id_member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_daftar_peminjaman);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        id_user = sharedpreferences.getString(ID_USER, null);
+        id_member = sharedpreferences.getString(ID_USER, null);
 
         recyclerView = findViewById(R.id.RVBuku);
         modelPinjamBukuArrayList = new ArrayList<>();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        GetDataPinjamBuku(id_user);
+        GetDataPinjamBuku(id_member);
 
     }
 
-    private void GetDataPinjamBuku(String id_user) {
+    private void GetDataPinjamBuku(String id_member) {
         ProgressDialog asyncDialog = new ProgressDialog(this);
         asyncDialog.setMessage("Mengambil Data Buku...");
         asyncDialog.show();
@@ -103,7 +101,7 @@ public class DaftarPeminjamanActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("id_member", id_user);
+                params.put("id_member", id_member);
                 params.put("status", "belum kembali");
                 return params;
             }

@@ -1,6 +1,8 @@
 package com.inventory.perpustakaan;
 
 import static com.inventory.perpustakaan.Api.konfig.UrlImageBuku;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -44,10 +46,8 @@ public class KeranjangBukuActivity extends AppCompatActivity {
     EditText ETNama_buku, ETstatus, ETpenulis, ETpenerbit, ETtglambil, ETtglkembali;
     String nama_buku, status, penulis, penerbit, gambar_buku;
     Button BTNPinjam;
-    private String id_user, id_buku;
+    private String id_member, nisn_isbn;
     SharedPreferences sharedpreferences;
-    public static final String SHARED_PREFS = "shared_prefs";
-    public static final String ID_USER = "id_user";
     LocalTime jamSaatIni = null;
     LocalTime jamPembanding = null;
     LocalDate tglambil = null;
@@ -60,9 +60,9 @@ public class KeranjangBukuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_keranjang_buku);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        id_user = sharedpreferences.getString(ID_USER, null);
+        id_member = sharedpreferences.getString(ID_USER, null);
 
-        id_buku = getIntent().getStringExtra("id_buku");
+        nisn_isbn = getIntent().getStringExtra("nisn_isbn");
         nama_buku = getIntent().getStringExtra("namabuku");
         status = getIntent().getStringExtra("stok");
         penulis = getIntent().getStringExtra("penulis");
@@ -122,12 +122,12 @@ public class KeranjangBukuActivity extends AppCompatActivity {
         BTNPinjam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pinjam(id_user, id_buku, tglambil.toString(), tglkembali.toString() );
+                pinjam(id_member, nisn_isbn, tglambil.toString(), tglkembali.toString() );
             }
         });
     }
 
-    private void pinjam(String id_user, String id_buku, String tgl_pinjam, String tgl_kembali) {
+    private void pinjam(String id_member, String nisn_isbn, String tgl_pinjam, String tgl_kembali) {
         // Buatkan request untuk mengirim data ke server
         RequestQueue queue = Volley.newRequestQueue(KeranjangBukuActivity.this);
         StringRequest request = new StringRequest(Request.Method.POST, konfig.UrlPinjamBuku,
@@ -152,6 +152,7 @@ public class KeranjangBukuActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(KeranjangBukuActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -167,8 +168,8 @@ public class KeranjangBukuActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
-                params.put("id_member", id_user.toString());
-                params.put("id_buku", id_buku.toString());
+                params.put("id_member", id_member.toString());
+                params.put("nisn_isbn", nisn_isbn.toString());
                 params.put("tgl_ambil", tgl_pinjam);
                 params.put("tgl_kembali", tgl_kembali);
                 return params;
