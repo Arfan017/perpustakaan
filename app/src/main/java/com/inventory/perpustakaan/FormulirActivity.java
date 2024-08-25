@@ -296,8 +296,8 @@ public class FormulirActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String message = jsonObject.getString("message");
                     boolean success = jsonObject.getBoolean("success");
+                    String message = jsonObject.getString("message");
 
                     if (success) {
                         Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -309,6 +309,8 @@ public class FormulirActivity extends AppCompatActivity {
 
                         startActivity(new Intent(FormulirActivity.this, LoginActivity.class));
 
+                    } else {
+                        Toast.makeText(FormulirActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     Toast.makeText(FormulirActivity.this, "Gagal memproses response server: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -349,7 +351,6 @@ public class FormulirActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(stringRequest);
-        Toast.makeText(this, "Mengirim data ke database", Toast.LENGTH_SHORT).show();
     }
 
     private Bitmap resizeBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
