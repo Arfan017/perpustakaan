@@ -8,7 +8,9 @@ import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHA
 import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.STATUS_MEMBER;
 import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.USERNAME_KEY;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -132,10 +134,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String message = jsonObject.getString("message");
                             boolean success = jsonObject.getBoolean("success");
 
                             if (success) {
+                                String message = jsonObject.getString("message");
                                 String id_member = jsonObject.getString("id_member");
                                 String status_member = jsonObject.getString("status_member");
 
@@ -154,7 +156,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                             } else {
                                 // Login gagal
-                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                PesanAlert1();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -274,6 +277,31 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         Volley.newRequestQueue(this).add(request);
+    }
+
+    private void PesanAlert1() {
+        // Create the object of AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+        // Set Alert Title
+        builder.setTitle("Peringatan !");
+
+        // Set the message show for the Alert time
+        builder.setMessage("Anda sudah mendaftar sebagi member, silahkan tunggu konfirmasi admin");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // When the user click yes button then app will close
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
     }
 
 }

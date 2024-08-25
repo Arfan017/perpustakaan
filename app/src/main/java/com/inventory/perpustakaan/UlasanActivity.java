@@ -2,9 +2,12 @@ package com.inventory.perpustakaan;
 
 import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.ID_USER;
 import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.SHARED_PREFS;
+import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.STATUS_MEMBER;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -51,6 +54,7 @@ public class UlasanActivity extends AppCompatActivity {
     Boolean isAllFabsVisible;
     SharedPreferences sharedpreferences;
     String Id_member;
+    String status_member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,8 @@ public class UlasanActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         Id_member = sharedpreferences.getString(ID_USER, null);
+        status_member = sharedpreferences.getString(STATUS_MEMBER, null);
+
 
         isAllFabsVisible = false;
 
@@ -92,13 +98,20 @@ public class UlasanActivity extends AppCompatActivity {
         FABUlasan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isAllFabsVisible) {
-                    LVUlasan.setVisibility(View.VISIBLE);
-                    isAllFabsVisible = true;
+                if (Integer.parseInt(status_member) == 0){
+                    PesanAlert();
+                } else if (Integer.parseInt(status_member) == 2) {
+                    PesanAlert1();
                 } else {
-                    LVUlasan.setVisibility(View.GONE);
-                    isAllFabsVisible = false;
+                    if (!isAllFabsVisible) {
+                        LVUlasan.setVisibility(View.VISIBLE);
+                        isAllFabsVisible = true;
+                    } else {
+                        LVUlasan.setVisibility(View.GONE);
+                        isAllFabsVisible = false;
+                    }
                 }
+
             }
         });
 
@@ -249,5 +262,62 @@ public class UlasanActivity extends AppCompatActivity {
         /* your specific things...*/
         super.onBackPressed();
     }
+    
+    private void PesanAlert() {
+        // Create the object of AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(UlasanActivity.this);
 
+        // Set Alert Title
+        builder.setTitle("Peringatan !");
+
+        // Set the message show for the Alert time
+        builder.setMessage("Anda belum menjadi member. \nAnda tidak dapat memberikan ulasan");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setPositiveButton("Daftar Member", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // When the user click yes button then app will close
+            Intent intent = new Intent(UlasanActivity.this, FormulirActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setNegativeButton("Nanti", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // If user click no then dialog box is canceled.
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
+    }
+
+    private void PesanAlert1() {
+        // Create the object of AlertDialog Builder class
+        AlertDialog.Builder builder = new AlertDialog.Builder(UlasanActivity.this);
+
+        // Set Alert Title
+        builder.setTitle("Peringatan !");
+
+        // Set the message show for the Alert time
+        builder.setMessage("Anda sudah mendaftar sebagi member, silahkan tunggu konfirmasi admin");
+
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {
+            // When the user click yes button then app will close
+            dialog.cancel();
+        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+        // Show the Alert Dialog box
+        alertDialog.show();
+    }
 }
