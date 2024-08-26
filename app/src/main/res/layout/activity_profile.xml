@@ -379,24 +379,25 @@
                 android:layout_height="wrap_content"
                 android:stretchColumns="1">
                 <!--No Identitas-->
-                <TableRow>
+<!--                <TableRow>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
-                        android:layout_gravity="start"
-                        android:gravity="center"
-                        android:text="No Identitas"
-                        android:textSize="15dp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="45dp"-->
+<!--                        android:layout_gravity="start"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="No Identitas"-->
+<!--                        android:textSize="15dp" />-->
 
-                    <EditText
-                        android:id="@+id/EditNoIdentitas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="No Identitas"
-                        android:textSize="15dp" />
+<!--                    <EditText-->
+<!--                        android:id="@+id/EditNoIdentitas"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="No Identitas"-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:inputType="number"/>-->
 
-                </TableRow>
+<!--                </TableRow>-->
                 <!--nama-->
                 <TableRow>
 
@@ -405,7 +406,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Nama Lengkap  "
+                        android:text="Nama Lengkap*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -413,7 +414,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="Nama"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:inputType="text"/>
 
                 </TableRow>
                 <!--jenkel-->
@@ -424,18 +426,15 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Jenis kelamin"
-                        android:textSize="15dp" />
+                        android:text="Jenis kelamin*" />
 
-                    <EditText
-                        android:id="@+id/EditJenkel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Jenis kelamin"
-                        android:textSize="15dp" />
+                    <Spinner
+                        android:id="@+id/dropdown_JK"
+                        android:layout_width="160dp"
+                        android:layout_height="45dp" />
 
                 </TableRow>
-                <!--Ttgl lahir-->
+                <!--Tempat lahir-->
                 <TableRow>
 
                     <TextView
@@ -443,14 +442,33 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="TTL"
+                        android:text="Tempat Lahir*"
                         android:textSize="15dp" />
 
                     <EditText
-                        android:id="@+id/EditTtl"
+                        android:id="@+id/ETtempatlahir"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tempat Tanggal Lahir"
+                        android:hint="Tempat Lahir"
+                        android:textSize="15dp" />
+
+                </TableRow>
+                <!--Tanggal lahir-->
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:gravity="center"
+                        android:text="Tanggal Lahir*"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/ETtgllahir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tanggal Lahir(double klik)"
                         android:textSize="15dp" />
 
                 </TableRow>
@@ -511,6 +529,11 @@
                         android:textSize="15dp" />
 
                 </TableRow>
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Centang jika sama dengan alamat identitas"/>
                 <!--NoHp-->
                 <TableRow>
 

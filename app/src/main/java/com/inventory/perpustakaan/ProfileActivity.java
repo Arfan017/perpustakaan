@@ -8,26 +8,29 @@ import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.STA
 import static com.inventory.perpustakaan.SharedPreferences.SharedPreferences.USERNAME_KEY;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,6 +46,7 @@ import com.inventory.perpustakaan.Api.konfig;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,13 +57,16 @@ public class ProfileActivity extends AppCompatActivity {
     Boolean isAllFabsVisible;
     EditText ETnama, ETjenkel, ETnohp, ETpekerjaan, ETemail, ETttllahir, ETalamat,
             EditNoIdentitas, EditNama, EditJenkel, EditTtl, EditEmail, EditAlamatIdentitas,
-            EditAlamatSekarang, EditNohp, EditPekerjaan, EditNamaInstitusi, EditAlamatInstitusi;
+            EditAlamatSekarang, EditNohp, EditPekerjaan, EditNamaInstitusi, EditAlamatInstitusi, EtTempatLahir, EtTgLahir;
     ImageView IVprofile;
     ScrollView SVedit;
     Button BtnSimpan, BtnBatal;
     SharedPreferences sharedpreferences;
     String id_member;
     TableRow TRRiwayat;
+    CheckBox checkBox;
+    Spinner dropdownJenisKelamin;
+    String[] jenisKelamin = {"Laki-laki", "Perempuan"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         id_member = sharedpreferences.getString(ID_USER, null);
+
 
         IVprofile = findViewById(R.id.IVProfile);
         TRRiwayat = findViewById(R.id.row_riwayat);
@@ -79,10 +87,12 @@ public class ProfileActivity extends AppCompatActivity {
         ETalamat = findViewById(R.id.ETAlamat);
         ETttllahir = findViewById(R.id.ETTtl);
 
-        EditNoIdentitas = findViewById(R.id.EditNoIdentitas);
+//        EditNoIdentitas = findViewById(R.id.EditNoIdentitas);
         EditNama = findViewById(R.id.EditNama);
-        EditJenkel = findViewById(R.id.EditJenkel);
-        EditTtl = findViewById(R.id.EditTtl);
+//        EditJenkel = findViewById(R.id.EditJenkel);
+        dropdownJenisKelamin = findViewById(R.id.dropdown_JK);
+        EtTempatLahir = findViewById(R.id.ETtempatlahir);
+        EtTgLahir = findViewById(R.id.ETtgllahir);
         EditEmail = findViewById(R.id.EditEmail);
         EditAlamatIdentitas = findViewById(R.id.EditAlamatIdentitas);
         EditAlamatSekarang = findViewById(R.id.EditAlamatSekarang);
@@ -126,12 +136,56 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
+        EtTgLahir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
+        checkBox = findViewById(R.id.checkBox);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkBox.isChecked()){
+                    EditAlamatSekarang.setEnabled(false);
+                    EditAlamatSekarang.setText(EditAlamatSekarang.getText().toString());
+                } else {
+                    EditAlamatSekarang.setEnabled(true);
+                    EditAlamatSekarang.setText("");
+                }
+            }
+        });
+
+        ArrayAdapter<String> adapterJenisKelamin = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, jenisKelamin);
+        dropdownJenisKelamin.setAdapter(adapterJenisKelamin);
+
         if (id_member != null) {
             SelectProfile(id_member);
         } else {
             PesanAlert();
         }
 
+        ETnama.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // Tidak perlu diisi jika tidak ada aksi sebelum teks berubah
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Mengecek apakah inputan mengandung angka
+                if (charSequence.toString().matches(".*\\d.*")) {
+                    ETnama.setError("Tempat lahir tidak boleh berisi angka");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Tidak perlu diisi jika tidak ada aksi setelah teks berubah
+            }
+        });
 
         TRRiwayat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +201,9 @@ public class ProfileActivity extends AppCompatActivity {
 
                 String NoIdentitas = EditNoIdentitas.getText().toString();
                 String Nama = EditNama.getText().toString();
-                String Jenkel = EditJenkel.getText().toString();
-                String Ttl = EditTtl.getText().toString();
+                String Jenkel = dropdownJenisKelamin.getSelectedItem().toString();
+                String TempatLahir = EtTempatLahir.getText().toString();
+                String TanggalLahir = EtTgLahir.getText().toString();
                 String Email = EditEmail.getText().toString();
                 String AlamatIdentitas = EditAlamatIdentitas.getText().toString();
                 String AlamatSekarang = EditAlamatSekarang.getText().toString();
@@ -181,7 +236,7 @@ public class ProfileActivity extends AppCompatActivity {
                     EditProfile(NoIdentitas,
                             Nama,
                             Jenkel,
-                            Ttl,
+                            TempatLahir, TanggalLahir,
                             Email,
                             AlamatIdentitas,
                             AlamatSekarang,
@@ -270,6 +325,29 @@ public class ProfileActivity extends AppCompatActivity {
             return false;
         });
     }
+    private void showDatePickerDialog() {
+        // Get current date
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Create DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                ProfileActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update TextView with selected date
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        EtTgLahir.setText(selectedDate);
+                    }
+                },
+                year, month, day);
+
+        // Show the dialog
+        datePickerDialog.show();
+    }
 
     private void SelectProfile(String id_member) {
         ProgressDialog asyncDialog = new ProgressDialog(ProfileActivity.this);
@@ -335,8 +413,8 @@ public class ProfileActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
-    private void EditProfile(String NoIdentitas, String Nama, String Jenkel, String Ttl, String Email, String AlamatIdentitas, String AlamatSekarang, String Nohp, String Pekerjaan, String NamaInstitusi, String AlamatInstitusi
-    ) {
+    private void EditProfile(String NoIdentitas, String Nama, String Jenkel, String Ttl, String Email, String AlamatIdentitas, String AlamatSekarang, String Nohp, String Pekerjaan, String NamaInstitusi, String AlamatInstitusi,
+                             String alamatInstitusi) {
         // Buatkan request untuk mengirim data ke server
         ProgressDialog asyncDialog = new ProgressDialog(ProfileActivity.this);
         asyncDialog.setMessage("Nengirim Data...");
@@ -382,7 +460,7 @@ public class ProfileActivity extends AppCompatActivity {
                 params.put("NoIdentitas", NoIdentitas.toString());
                 params.put("Nama", Nama.toString());
                 params.put("Jenkel", Jenkel.toString());
-                params.put("Ttl", Ttl.toString());
+                params.put("TempatLahir", Ttl.toString());
                 params.put("Email", Email.toString());
                 params.put("AlamatIdentitas", AlamatIdentitas.toString());
                 params.put("AlamatSekarang", AlamatSekarang.toString());
