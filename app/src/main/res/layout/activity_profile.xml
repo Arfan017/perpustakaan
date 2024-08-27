@@ -480,7 +480,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Email"
+                        android:text="Email*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -499,7 +499,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Alamat "
+                        android:text="Alamat*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -518,7 +518,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Alamat"
+                        android:text="Alamat*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -542,7 +542,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="No. Hp"
+                        android:text="No. Hp*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -550,7 +550,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="No. Hp"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:inputType="number"/>
 
                 </TableRow>
                 <!--Pekerjaan-->
@@ -561,7 +562,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Pekerjaan"
+                        android:text="Pekerjaan*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -580,7 +581,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Nama Institusi"
+                        android:text="Nama Institusi*"
                         android:textSize="15dp" />
 
                     <EditText
@@ -599,7 +600,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="start"
                         android:gravity="center"
-                        android:text="Alamat Institusi"
+                        android:text="Alamat Institusi*"
                         android:textSize="15dp" />
 
                     <EditText

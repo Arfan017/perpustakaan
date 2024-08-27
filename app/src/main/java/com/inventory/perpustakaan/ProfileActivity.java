@@ -100,6 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
         EditPekerjaan = findViewById(R.id.EditPekerjaan);
         EditNamaInstitusi = findViewById(R.id.EditNamaInstitusi);
         EditAlamatInstitusi = findViewById(R.id.EditAlamatInstitusi);
+        checkBox = findViewById(R.id.checkBox);
 
         // inisialisasi ScollView
         SVedit = findViewById(R.id.SVEdit);
@@ -143,14 +144,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        checkBox = findViewById(R.id.checkBox);
 
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkBox.isChecked()){
+                if (checkBox.isChecked()) {
                     EditAlamatSekarang.setEnabled(false);
-                    EditAlamatSekarang.setText(EditAlamatSekarang.getText().toString());
+                    EditAlamatSekarang.setText(EditAlamatIdentitas.getText().toString());
                 } else {
                     EditAlamatSekarang.setEnabled(true);
                     EditAlamatSekarang.setText("");
@@ -167,7 +167,7 @@ public class ProfileActivity extends AppCompatActivity {
             PesanAlert();
         }
 
-        ETnama.addTextChangedListener(new TextWatcher() {
+        EditNama.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
                 // Tidak perlu diisi jika tidak ada aksi sebelum teks berubah
@@ -177,7 +177,27 @@ public class ProfileActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 // Mengecek apakah inputan mengandung angka
                 if (charSequence.toString().matches(".*\\d.*")) {
-                    ETnama.setError("Tempat lahir tidak boleh berisi angka");
+                    EditNama.setError("Tempat lahir tidak boleh berisi angka");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Tidak perlu diisi jika tidak ada aksi setelah teks berubah
+            }
+        });
+
+        EtTempatLahir.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // Tidak perlu diisi jika tidak ada aksi sebelum teks berubah
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Mengecek apakah inputan mengandung angka
+                if (charSequence.toString().matches(".*\\d.*")) {
+                    EtTempatLahir.setError("Tempat lahir tidak boleh berisi angka");
                 }
             }
 
@@ -198,53 +218,7 @@ public class ProfileActivity extends AppCompatActivity {
         BtnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String NoIdentitas = EditNoIdentitas.getText().toString();
-                String Nama = EditNama.getText().toString();
-                String Jenkel = dropdownJenisKelamin.getSelectedItem().toString();
-                String TempatLahir = EtTempatLahir.getText().toString();
-                String TanggalLahir = EtTgLahir.getText().toString();
-                String Email = EditEmail.getText().toString();
-                String AlamatIdentitas = EditAlamatIdentitas.getText().toString();
-                String AlamatSekarang = EditAlamatSekarang.getText().toString();
-                String Nohp = EditNohp.getText().toString();
-                String Pekerjaan = EditPekerjaan.getText().toString();
-                String NamaInstitusi = EditNamaInstitusi.getText().toString();
-                String AlamatInstitusi = EditAlamatInstitusi.getText().toString();
-
-                if (EditNoIdentitas.getText().toString().isEmpty()){
-                    EditNoIdentitas.setError("No Identitas tidak boleh kosong");
-                } else if (EditNama.getText().toString().isEmpty()) {
-                    EditNama.setError("Nama tidak boleh kosong");
-                } else if (EditJenkel.getText().toString().isEmpty()) {
-                    EditJenkel.setError("Jenis Jekamin tidak boleh kosong");
-                } else if (EditTtl.getText().toString().isEmpty()) {
-                    EditTtl.setError("Tempat, tanggal lahir tidak boleh kosong");
-                } else if (EditAlamatIdentitas.getText().toString().isEmpty()) {
-                    EditAlamatIdentitas.setError("Alamat tidak boleh kosong");
-                } else if (EditAlamatSekarang.getText().toString().isEmpty()) {
-                    EditAlamatSekarang.setError("Alamat tidak boleh kosong");
-                } else if (EditNohp.getText().toString().isEmpty()) {
-                    EditNohp.setError("No Hp tidak boleh kosong");
-                } else if (EditPekerjaan.getText().toString().isEmpty()) {
-                    EditPekerjaan.setError("Pekerjaan tidak boleh kosong");
-                } else if (EditNamaInstitusi.getText().toString().isEmpty()) {
-                    EditNamaInstitusi.setError("Nama Institusi tidak boleh kosong");
-                } else if (EditAlamatInstitusi.getText().toString().isEmpty()) {
-                    EditAlamatInstitusi.setError("Alamat Institusi tidak boleh kosong");
-                } else {
-                    EditProfile(NoIdentitas,
-                            Nama,
-                            Jenkel,
-                            TempatLahir, TanggalLahir,
-                            Email,
-                            AlamatIdentitas,
-                            AlamatSekarang,
-                            Nohp,
-                            Pekerjaan,
-                            NamaInstitusi,
-                            AlamatInstitusi);
-                }
+                handleForm();
             }
         });
 
@@ -296,7 +270,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 editor.apply();
 
-                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class );
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -325,6 +299,7 @@ public class ProfileActivity extends AppCompatActivity {
             return false;
         });
     }
+
     private void showDatePickerDialog() {
         // Get current date
         final Calendar calendar = Calendar.getInstance();
@@ -413,8 +388,9 @@ public class ProfileActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
-    private void EditProfile(String NoIdentitas, String Nama, String Jenkel, String Ttl, String Email, String AlamatIdentitas, String AlamatSekarang, String Nohp, String Pekerjaan, String NamaInstitusi, String AlamatInstitusi,
-                             String alamatInstitusi) {
+    private void EditProfile(String Nama, String Jenkel, String TempatLahir, String tglLahir, String Email,
+                             String AlamatIdentitas, String AlamatSekarang, String Nohp, String Pekerjaan,
+                             String NamaInstitusi, String AlamatInstitusi) {
         // Buatkan request untuk mengirim data ke server
         ProgressDialog asyncDialog = new ProgressDialog(ProfileActivity.this);
         asyncDialog.setMessage("Nengirim Data...");
@@ -428,18 +404,21 @@ public class ProfileActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
+                            String message = jsonObject.getString("message");
 
                             if (success) {
                                 asyncDialog.dismiss();
+                                Toast.makeText(ProfileActivity.this, message.toString(), Toast.LENGTH_SHORT).show();
                                 SelectProfile(id_member);
 
                             } else {
                                 // Login gagal
                                 asyncDialog.dismiss();
-                                Toast.makeText(ProfileActivity.this, "ada kesalahan", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileActivity.this, message.toString(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -457,10 +436,10 @@ public class ProfileActivity extends AppCompatActivity {
                 // Mengirim data username dan password ke server
                 Map<String, String> params = new HashMap<>();
                 params.put("id_member", id_member);
-                params.put("NoIdentitas", NoIdentitas.toString());
                 params.put("Nama", Nama.toString());
                 params.put("Jenkel", Jenkel.toString());
-                params.put("TempatLahir", Ttl.toString());
+                params.put("TempatLahir", TempatLahir.toString());
+                params.put("TanggalLahir", tglLahir.toString());
                 params.put("Email", Email.toString());
                 params.put("AlamatIdentitas", AlamatIdentitas.toString());
                 params.put("AlamatSekarang", AlamatSekarang.toString());
@@ -505,5 +484,91 @@ public class ProfileActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         // Show the Alert Dialog box
         alertDialog.show();
+    }
+
+    private void handleForm() {
+        if (validateForm()) {
+            String Nama = EditNama.getText().toString();
+            String Jenkel = dropdownJenisKelamin.getSelectedItem().toString();
+            String TempatLahir = EtTempatLahir.getText().toString();
+            String TanggalLahir = EtTgLahir.getText().toString();
+            String Email = EditEmail.getText().toString();
+            String AlamatIdentitas = EditAlamatIdentitas.getText().toString();
+            String AlamatSekarang = EditAlamatSekarang.getText().toString();
+            String Nohp = EditNohp.getText().toString();
+            String Pekerjaan = EditPekerjaan.getText().toString();
+            String NamaInstitusi = EditNamaInstitusi.getText().toString();
+            String AlamatInstitusi = EditAlamatInstitusi.getText().toString();
+
+            if (containsDigit(Nama)) {
+                EditNama.setError("Nama tidak boleh berisi angka");
+                Toast.makeText(ProfileActivity.this, "Nama tidak boleh berisi angka", Toast.LENGTH_SHORT).show();
+            } else if (containsDigit(TempatLahir)) {
+                EtTempatLahir.setError("Tempat lahir tidak boleh berisi angka");
+                Toast.makeText(ProfileActivity.this, "Tempat lahir tidak boleh berisi angka", Toast.LENGTH_SHORT).show();
+            } else {
+                EditProfile(Nama, Jenkel, TempatLahir, TanggalLahir, Email, AlamatIdentitas,
+                        AlamatSekarang, Nohp, Pekerjaan, NamaInstitusi, AlamatInstitusi);
+            }
+        } else {
+            Toast.makeText(ProfileActivity.this, "Form tidak valid", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean validateForm() {
+        boolean isValid = true;
+
+        if (id_member.isEmpty()){
+            Toast.makeText(ProfileActivity.this, "id member tidak boleh kosong", Toast.LENGTH_SHORT).show();
+        }
+        if (EditNama.getText().toString().isEmpty()) {
+            EditNama.setError("Nama tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EtTempatLahir.getText().toString().isEmpty()) {
+            EtTempatLahir.setError("Tempat lahir tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EtTgLahir.getText().toString().isEmpty()) {
+            EtTgLahir.setError("Tanggal lahir tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EditAlamatIdentitas.getText().toString().isEmpty()) {
+            EditAlamatIdentitas.setError("Alamat tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EditAlamatSekarang.getText().toString().isEmpty()) {
+            EditAlamatSekarang.setError("Alamat tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EditNohp.getText().toString().isEmpty()) {
+            EditNohp.setError("No Hp tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EditPekerjaan.getText().toString().isEmpty()) {
+            EditPekerjaan.setError("Pekerjaan tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EditNamaInstitusi.getText().toString().isEmpty()) {
+            EditNamaInstitusi.setError("Nama Institusi tidak boleh kosong");
+            isValid = false;
+        }
+
+        if (EditAlamatInstitusi.getText().toString().isEmpty()) {
+            EditAlamatInstitusi.setError("Alamat Institusi tidak boleh kosong");
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    public static boolean containsDigit(String input) {
+        return input.matches(".*\\d.*"); // Atau gunakan metode loop
     }
 }
