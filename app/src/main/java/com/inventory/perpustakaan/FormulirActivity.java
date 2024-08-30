@@ -34,6 +34,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -95,6 +98,8 @@ public class FormulirActivity extends AppCompatActivity {
             "Kartu Pelajar", "SIM"};
 
     String[] jenisKelamin = {"Laki-laki", "Perempuan"};
+
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,31 +165,32 @@ public class FormulirActivity extends AppCompatActivity {
         circleImageprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    Dexter.withActivity(FormulirActivity.this)
-                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            .withListener(new MultiplePermissionsListener() {
-                                @Override
-                                public void onPermissionsChecked(MultiplePermissionsReport report) {
-                                    if (report.areAllPermissionsGranted()) {
-                                        Intent intent = new Intent(Intent.ACTION_PICK);
-                                        intent.setType("image/*");
-                                        startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
-                                    } else {
-                                        Toast.makeText(FormulirActivity.this, "Izin diperlukan untuk mengakses penyimpanan", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                                    token.continuePermissionRequest();
-                                }
-                            }).check();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
-                }
+                onPickImageClick(v);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    Dexter.withActivity(FormulirActivity.this)
+//                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                            .withListener(new MultiplePermissionsListener() {
+//                                @Override
+//                                public void onPermissionsChecked(MultiplePermissionsReport report) {
+//                                    if (report.areAllPermissionsGranted()) {
+//                                        Intent intent = new Intent(Intent.ACTION_PICK);
+//                                        intent.setType("image/*");
+//                                        startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+//                                    } else {
+//                                        Toast.makeText(FormulirActivity.this, "Izin diperlukan untuk mengakses penyimpanan", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+//                                    token.continuePermissionRequest();
+//                                }
+//                            }).check();
+//                } else {
+//                    Intent intent = new Intent(Intent.ACTION_PICK);
+//                    intent.setType("image/*");
+//                    startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+//                }
             }
         });
 
@@ -225,6 +231,16 @@ public class FormulirActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 // Tidak perlu diisi jika tidak ada aksi setelah teks berubah
+            }
+        });
+
+        // Inisialisasi picker gambar untuk Android 13+
+        pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+            if (uri != null) {
+                // Gambar dipilih
+                // Lakukan sesuatu dengan URI gambar
+            } else {
+                // Tidak ada gambar yang dipilih
             }
         });
     }
@@ -634,5 +650,46 @@ public class FormulirActivity extends AppCompatActivity {
 
         // Tampilkan pesan kesalahan
         Toast.makeText(FormulirActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    public void pickImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+
+            pickMedia.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                    .build());
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android 6-12
+            Dexter.withActivity(FormulirActivity.this)
+                    .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .withListener(new MultiplePermissionsListener() {
+                        @Override
+                        public void onPermissionsChecked(MultiplePermissionsReport report) {
+                            if (report.areAllPermissionsGranted()) {
+                                launchLegacyImagePicker();
+                            } else {
+                                Toast.makeText(FormulirActivity.this, "Izin diperlukan untuk mengakses penyimpanan", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                            token.continuePermissionRequest();
+                        }
+                    }).check();
+        } else {
+            // < Android 6
+            launchLegacyImagePicker();
+        }
+    }
+
+    private void launchLegacyImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
+    }
+
+    public void onPickImageClick(android.view.View view) {
+        pickImage();
     }
 }
