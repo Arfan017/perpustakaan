@@ -166,31 +166,6 @@ public class FormulirActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onPickImageClick(v);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    Dexter.withActivity(FormulirActivity.this)
-//                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                            .withListener(new MultiplePermissionsListener() {
-//                                @Override
-//                                public void onPermissionsChecked(MultiplePermissionsReport report) {
-//                                    if (report.areAllPermissionsGranted()) {
-//                                        Intent intent = new Intent(Intent.ACTION_PICK);
-//                                        intent.setType("image/*");
-//                                        startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
-//                                    } else {
-//                                        Toast.makeText(FormulirActivity.this, "Izin diperlukan untuk mengakses penyimpanan", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-//                                    token.continuePermissionRequest();
-//                                }
-//                            }).check();
-//                } else {
-//                    Intent intent = new Intent(Intent.ACTION_PICK);
-//                    intent.setType("image/*");
-//                    startActivityForResult(Intent.createChooser(intent, "pilih gambar"), 1);
-//                }
             }
         });
 
@@ -238,7 +213,7 @@ public class FormulirActivity extends AppCompatActivity {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             if (uri != null) {
                 // Gambar dipilih
-                // Lakukan sesuatu dengan URI gambar
+                circleImageprofile.setImageBitmap(capturedImage);
             } else {
                 // Tidak ada gambar yang dipilih
             }
