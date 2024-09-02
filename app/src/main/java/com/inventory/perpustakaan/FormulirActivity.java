@@ -213,7 +213,7 @@ public class FormulirActivity extends AppCompatActivity {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             if (uri != null) {
                 // Gambar dipilih
-                circleImageprofile.setImageBitmap(capturedImage);
+                setImageFromUri(uri);
             } else {
                 // Tidak ada gambar yang dipilih
             }
@@ -666,5 +666,25 @@ public class FormulirActivity extends AppCompatActivity {
 
     public void onPickImageClick(android.view.View view) {
         pickImage();
+    }
+
+    private void setImage(Bitmap bitmap) {
+        circleImageprofile.setImageBitmap(bitmap);
+    }
+
+    private void setImageFromUri(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            capturedImage = BitmapFactory.decodeStream(inputStream);
+            capturedImage = resizeBitmap(capturedImage, 800, 800);
+
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            setImage(capturedImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
+        }
     }
 }

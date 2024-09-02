@@ -167,7 +167,7 @@ public class UlasanActivity extends AppCompatActivity {
                                     //adding the product to product list
                                     modelUlasanArrayList.add(new ModelUlasan(
                                             ulasan.getInt("id_rating"),
-                                            ulasan.getInt("nisn_isbn"),
+                                            ulasan.getString("nisn_isbn"),
                                             ulasan.getInt("rating"),
                                             ulasan.getString("ulasan"),
                                             ulasan.getString("gambar_buku"),
