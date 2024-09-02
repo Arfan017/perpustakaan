@@ -135,9 +135,10 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
+                            String message = jsonObject.getString("message");
 
                             if (success) {
-                                String message = jsonObject.getString("message");
+                                message = jsonObject.getString("message");
                                 String id_member = jsonObject.getString("id_member");
                                 String status_member = jsonObject.getString("status_member");
 
@@ -157,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 // Login gagal
 //                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                                PesanAlert1();
+                                PesanAlert1(message);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -279,7 +280,7 @@ public class LoginActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
-    private void PesanAlert1() {
+    private void PesanAlert1(String message) {
         // Create the object of AlertDialog Builder class
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
@@ -287,7 +288,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.setTitle("Peringatan !");
 
         // Set the message show for the Alert time
-        builder.setMessage("Anda sudah mendaftar sebagi member, silahkan tunggu konfirmasi admin");
+        builder.setMessage(message);
 
         // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
         builder.setCancelable(false);
